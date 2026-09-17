@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Кітап Дала — игровой тренажёр чтения для детей 5–7 лет на казахском, русском и английском языках">
+<title>Кітап Дала</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Rubik:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#E3F2F3; --sky:#C9E7EC; --paper:#FBFDFB; --ink:#16303B; --ink-2:#4B6570; --line:#B5D3D8;
+  --gold:#E9A826; --gold-deep:#B87E0C; --gold-soft:#FBE7B5; --btn-ink:#2A1C00;
+  --turq:#127F86; --turq-deep:#0B5A5F; --turq-soft:#CDEBEA; --on-turq:#FFFFFF;
+  --grass:#9CBF6B; --hill:#C4DA96; --mount:#9DBDC8; --sun:#F2B233; --cloud:#FFFFFF;
+  --ok:#2E8B57; --ok-soft:#D5F0DF; --no:#C9533A; --stars:0;
+  --r-lg:22px; --r-md:14px;
+  --f-display:"Rubik",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-read:"Andika","Trebuchet MS",Verdana,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1C2A; --sky:#132B40; --paper:#172C3F; --ink:#E7F1F0; --ink-2:#9DB4BC; --line:#2B4A62;
+    --gold:#F2BA45; --gold-deep:#A87A12; --gold-soft:#3D3316; --btn-ink:#231800;
+    --turq:#46B8B8; --turq-deep:#237C7C; --turq-soft:#17393F; --on-turq:#062020;
+    --grass:#3F6A42; --hill:#2E5038; --mount:#2A4A5F; --sun:#F1E6C0; --cloud:#2C4860;
+    --ok:#5CC08A; --ok-soft:#17392A; --no:#E0765C; --stars:1;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1C2A; --sky:#132B40; --paper:#172C3F; --ink:#E7F1F0; --ink-2:#9DB4BC; --line:#2B4A62;
+  --gold:#F2BA45; --gold-deep:#A87A12; --gold-soft:#3D3316; --btn-ink:#231800;
+  --turq:#46B8B8; --turq-deep:#237C7C; --turq-soft:#17393F; --on-turq:#062020;
+  --grass:#3F6A42; --hill:#2E5038; --mount:#2A4A5F; --sun:#F1E6C0; --cloud:#2C4860;
+  --ok:#5CC08A; --ok-soft:#17392A; --no:#E0765C; --stars:1;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-read);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(1.6rem,3.6vw,2.35rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(1.2rem,2.6vw,1.5rem);font-weight:700}
+p{margin:0}
+.app{max-width:1120px;margin:0 auto;padding-inline:16px;padding-block:10px 110px}
+.eyebrow{font-family:var(--f-display);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--turq);font-weight:700;margin-bottom:6px}
+.lead{color:var(--ink-2);max-width:60ch;margin-top:6px}
+
+/* header */
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-block:6px}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+.brand svg{width:42px;height:42px;flex:none}
+.brand b{font-family:var(--f-display);font-weight:800;font-size:1.45rem;display:block;line-height:1.05}
+.brand small{display:block;color:var(--ink-2);font-size:.8rem;line-height:1.25}
+.bm-disc{fill:var(--gold)} .bm-line{stroke:var(--btn-ink);fill:none}
+.nav{display:flex;gap:4px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px}
+.nav button{display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:999px;font-family:var(--f-display);font-weight:500;font-size:.95rem;color:var(--ink-2)}
+.nav button[aria-current="page"]{background:var(--turq);color:var(--on-turq)}
+.nav svg{width:20px;height:20px;flex:none}
+.langs{display:flex;gap:4px}
+.langs button{font-family:var(--f-display);font-weight:700;font-size:.78rem;letter-spacing:.06em;padding:7px 10px;border-radius:10px;border:2px solid var(--line);color:var(--ink-2);background:var(--paper)}
+.langs button[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-soft);color:var(--ink)}
+.band{height:14px;margin-block:8px 20px;background-repeat:repeat-x;background-size:auto 14px;opacity:.6}
+@media (max-width:760px){
+  .nav{position:fixed;left:0;right:0;bottom:0;z-index:20;border-radius:18px 18px 0 0;justify-content:space-around;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -6px 20px rgba(0,0,0,.1)}
+  .nav button{flex-direction:column;gap:2px;font-size:.7rem;padding:6px 8px;border-radius:12px}
+  .brand small{display:none}
+}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--f-display);font-weight:700;font-size:1.05rem;padding:12px 22px;border-radius:16px;background:var(--gold);color:var(--btn-ink);box-shadow:0 4px 0 var(--gold-deep);transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--gold-deep)}
+.btn svg{width:22px;height:22px;flex:none}
+.btn.alt{background:var(--paper);color:var(--ink);box-shadow:0 4px 0 var(--line);border:2px solid var(--line)}
+.btn.teal{background:var(--turq);color:var(--on-turq);box-shadow:0 4px 0 var(--turq-deep)}
+.btn.live{animation:glow 1.2s ease-in-out infinite}
+.say{width:64px;height:64px;border-radius:50%;background:var(--turq);color:var(--on-turq);display:grid;place-items:center;box-shadow:0 4px 0 var(--turq-deep);flex:none}
+.say svg{width:30px;height:30px}
+.say.sm{width:48px;height:48px}.say.sm svg{width:24px;height:24px}
+.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+
+/* map */
+.map-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.map-grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px;align-items:stretch}
+@media (max-width:900px){.map-grid{grid-template-columns:1fr}}
+.map-card{border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line);background:var(--sky)}
+.map-card svg{display:block;width:100%;height:auto}
+.m-sky{fill:var(--sky)} .m-mount{fill:var(--mount)} .m-hill{fill:var(--hill)} .m-grass{fill:var(--grass)}
+.m-snow{fill:var(--paper);opacity:.85} .m-cloud{fill:var(--cloud);opacity:.75} .m-sun{fill:var(--sun)}
+.m-star{fill:#FFF6D8;opacity:var(--stars)}
+.m-trail{fill:none;stroke:var(--paper);stroke-width:6;stroke-dasharray:1 14;stroke-linecap:round}
+.m-trail-done{fill:none;stroke:var(--gold);stroke-width:7;stroke-linecap:round}
+.m-label{font-family:var(--f-display);font-weight:700;font-size:17px;fill:var(--ink);paint-order:stroke;stroke:var(--paper);stroke-width:5px;stroke-linejoin:round}
+.m-shadow{fill:#000;opacity:.12}
+.yurt{cursor:pointer}
+.yurt .dome{fill:#FBF6EA;stroke:#7B5C3E;stroke-width:2}
+.yurt .fband{fill:#C9533A}
+.yurt .door{fill:#127F86}
+.yurt.locked{cursor:not-allowed}
+.yurt.locked .dome{fill:#DCE2E0;stroke:#8C9A9A}.yurt.locked .fband{fill:#AEB9B8}.yurt.locked .door{fill:#8C9A9A}
+.yurt .ring{fill:none;stroke:var(--gold);stroke-width:4;transform-box:fill-box;transform-origin:center;animation:ring 1.8s ease-out infinite}
+.yurt:focus-visible{outline:none}.yurt:focus-visible .dome{stroke:var(--gold);stroke-width:4}
+.bt-trunk{fill:#E9EEF0;stroke:#7B8B93;stroke-width:1.5}.bt-branch{stroke:#E9EEF0;fill:none;stroke-width:4;stroke-linecap:round}
+.bt-sphere{fill:var(--gold)}.bt-glow{fill:var(--gold);opacity:.28}
+.m-lock{fill:var(--ink-2)}
+
+.pet-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center;justify-content:center}
+.pet-card svg{width:180px;height:180px;max-width:100%}
+.pet-card h2{font-size:1.3rem}
+.meter{width:100%;height:12px;border-radius:99px;background:var(--turq-soft);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--gold);border-radius:inherit;transition:width .6s}
+.small{font-size:.88rem;color:var(--ink-2)}
+.eyes{transform-box:fill-box;transform-origin:center;animation:blink 4.5s infinite}
+.wobble{transform-box:fill-box;transform-origin:50% 100%;animation:wob 3.2s ease-in-out infinite}
+.grow svg{animation:grow .9s cubic-bezier(.3,1.6,.5,1)}
+
+.stations{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+@media (max-width:900px){.stations{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:540px){.stations{grid-template-columns:1fr}}
+.st{display:grid;grid-template-columns:48px 1fr;gap:2px 12px;align-items:center;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px}
+.st .num{grid-row:span 3;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:1.2rem;background:var(--turq-soft);color:var(--turq)}
+.st b{font-family:var(--f-display);font-weight:700;font-size:1.02rem}
+.st small{color:var(--ink-2);font-size:.86rem;line-height:1.3}
+.st .meta{font-size:.8rem;color:var(--ink-2);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.st .meta .sts{color:var(--gold);letter-spacing:1px;font-size:.95rem}
+.st.current{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
+.st.current .num{background:var(--gold);color:var(--btn-ink)}
+.st.done .num{background:var(--turq);color:var(--on-turq)}
+.st.locked{opacity:.62;cursor:not-allowed}
+
+/* lesson */
+.lesson{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px clamp(16px,3vw,32px) 30px;min-height:520px;position:relative;overflow:hidden}
+.l-top{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.l-top .x{width:44px;height:44px;border-radius:12px;border:2px solid var(--line);display:grid;place-items:center;flex:none}
+.l-top .x svg{width:20px;height:20px}
+.l-prog{flex:1;height:14px;border-radius:99px;background:var(--turq-soft);overflow:hidden}
+.l-prog i{display:block;height:100%;width:0;background:var(--gold);border-radius:inherit;transition:width .5s}
+.l-title{font-family:var(--f-display);font-weight:700;color:var(--ink-2);font-size:.9rem}
+@media (max-width:540px){.l-title{display:none}}
+.prompt{display:flex;align-items:center;gap:14px;justify-content:center;flex-wrap:wrap;margin-block:6px 18px;text-align:center}
+.prompt h2{font-size:clamp(1.3rem,3vw,1.8rem)}
+.peek{font-family:var(--f-read);font-weight:700;font-size:1.6rem;background:var(--gold-soft);border:2px solid var(--gold);border-radius:12px;padding:0 12px}
+.pic{font-size:clamp(4rem,13vw,6rem);text-align:center;line-height:1.1}
+.bigword{font-family:var(--f-read);font-weight:700;font-size:clamp(3rem,11vw,5.4rem);letter-spacing:.05em;text-align:center;line-height:1.15;border-radius:18px;transition:background .3s}
+.bigword.ok{color:var(--ok);background:var(--ok-soft)}
+.hint{text-align:center;min-height:2em;font-size:1.4rem;color:var(--ink);margin-top:14px;font-weight:700}
+.mic-status{text-align:center;color:var(--ink-2);min-height:1.6em;margin-top:12px;max-width:60ch;margin-inline:auto}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;max-width:640px;margin:0 auto}
+.tiles.three{grid-template-columns:repeat(3,minmax(0,1fr));max-width:500px;margin-top:22px}
+@media (max-width:540px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.tiles.three{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.tile{aspect-ratio:1;max-width:100%;border-radius:22px;background:var(--ground);border:3px solid var(--line);font-family:var(--f-read);font-weight:700;font-size:clamp(2.6rem,8vw,4.2rem);color:var(--ink);box-shadow:0 5px 0 var(--line);display:flex;align-items:baseline;justify-content:center;gap:.12em;padding-top:.15em;transition:background .2s}
+.tiles.three .tile{align-items:center;padding-top:0}
+.tile small{font-size:.6em;color:var(--ink-2)}
+.tile.ok{background:var(--ok-soft);border-color:var(--ok);box-shadow:0 5px 0 var(--ok)}
+.tile.no{animation:shake .4s;opacity:.4}
+
+.skyfield{position:relative;height:clamp(340px,52vh,440px);border-radius:18px;background:linear-gradient(var(--sky),var(--ground));overflow:hidden;border:1px solid var(--line)}
+.balloon{position:absolute;bottom:-140px;left:var(--x);width:clamp(66px,17%,100px);aspect-ratio:.82;border-radius:50% 50% 47% 47%/56% 56% 44% 44%;background:var(--c);display:grid;place-items:center;font-family:var(--f-read);font-weight:700;font-size:clamp(1.5rem,4.5vw,2.1rem);color:#1B2A33;box-shadow:inset -8px -10px 0 rgba(0,0,0,.08),inset 8px 8px 0 rgba(255,255,255,.3);animation:rise var(--d) linear infinite;animation-delay:var(--dl)}
+.balloon::after{content:"";position:absolute;top:100%;left:50%;width:2px;height:42px;background:rgba(0,0,0,.28)}
+.balloon.wrong{animation:rise var(--d) linear infinite,wob2 .45s;animation-delay:var(--dl),0s}
+
+.slots{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;min-height:80px;padding:14px;border:3px dashed var(--line);border-radius:18px;max-width:780px;margin:14px auto 0}
+.slots.ok{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}
+.pool{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:20px}
+.chip{font-family:var(--f-read);font-weight:700;font-size:clamp(1.35rem,4vw,1.9rem);padding:6px 18px;border-radius:14px;background:var(--gold-soft);border:2px solid var(--gold);box-shadow:0 4px 0 var(--gold-deep);color:var(--ink)}
+.chip.used{visibility:hidden}
+.slots .chip{background:var(--paper);border-color:var(--turq);box-shadow:0 3px 0 var(--turq-deep)}
+.slots .chip.bad{border-color:var(--no);box-shadow:0 3px 0 var(--no);animation:shake .4s}
+
+.story{max-width:34ch;margin:0 auto;font-family:var(--f-read);font-size:clamp(1.35rem,3.2vw,1.85rem);line-height:1.85}
+.story .w{border-radius:8px;padding:0 3px;transition:background .2s,color .2s}
+.story .w.on{background:var(--gold-soft);box-shadow:inset 0 -3px 0 var(--gold)}
+.story .w.read{color:var(--turq)}
+.story-card .story{max-width:40ch}
+.timer{font-family:var(--f-display);font-variant-numeric:tabular-nums;font-weight:800;font-size:1.6rem}
+.q{text-align:center;font-size:clamp(1.2rem,3vw,1.6rem);margin-top:26px}
+.opt{font-family:var(--f-read);font-weight:700;font-size:1.3rem;padding:12px 20px;border-radius:16px;border:3px solid var(--line);background:var(--ground);box-shadow:0 4px 0 var(--line)}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok)}
+.opt.no{opacity:.45;animation:shake .4s}
+.wpm-line{text-align:center;font-family:var(--f-display);font-weight:700;font-size:1.3rem;margin-top:16px;color:var(--turq)}
+
+.race-bar{display:flex;justify-content:center;gap:24px;align-items:center;flex-wrap:wrap;margin-block:10px 14px;color:var(--ink-2)}
+.race{list-style:none;padding:0;margin:0 auto;display:grid;gap:6px;justify-items:center;max-width:420px;transition:filter .3s}
+.race.wait{filter:blur(7px)}
+.race .w{font-family:var(--f-read);font-weight:700;font-size:clamp(1.45rem,5vw,2rem);padding:2px 18px;border-radius:12px}
+.race .w.read{background:var(--turq-soft);color:var(--turq)}
+.center{text-align:center;margin-inline:auto}
+
+.result{text-align:center;display:grid;gap:12px;justify-items:center;padding-block:6px}
+.bigstars{display:flex;gap:8px}
+.bstar{width:clamp(52px,12vw,74px);height:auto;fill:var(--gold)}
+.bstar.off{fill:var(--line)}
+.result .pet svg{width:170px;height:170px}
+.unlock{background:var(--gold-soft);border:2px solid var(--gold);border-radius:14px;padding:8px 16px;font-weight:700}
+
+/* story builder */
+.sb{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:18px;align-items:start}
+@media (max-width:860px){.sb{grid-template-columns:1fr}}
+.groups{display:grid;gap:12px}
+.pick-group{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px}
+.choices{display:flex;flex-wrap:wrap;gap:8px}
+.choice{padding:8px 12px;border-radius:12px;border:2px solid var(--line);background:var(--ground);font-size:1rem;display:flex;gap:6px;align-items:center}
+.choice[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-soft);font-weight:700}
+.story-card{background:var(--paper);border:2px solid var(--gold);border-radius:var(--r-lg);padding:22px clamp(16px,3vw,30px);position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px)}
+.story-card .scene{font-size:3rem;letter-spacing:.2em;text-align:center;margin-bottom:8px}
+
+/* dictionary */
+.dict{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-top:18px}
+.wcard{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 8px 10px;display:grid;justify-items:center;gap:2px}
+.wcard .e{font-size:2.6rem;line-height:1.2}
+.wcard b{font-family:var(--f-read);font-size:1.35rem}
+.wcard.no{background:transparent;border-style:dashed;cursor:default}
+.wcard.no .e{filter:grayscale(1);opacity:.3}
+.wcard.no b{color:var(--ink-2);letter-spacing:.2em}
+.count-pill{display:inline-block;font-family:var(--f-display);font-weight:700;background:var(--turq-soft);color:var(--turq);border-radius:99px;padding:4px 12px;font-size:.9rem}
+
+/* parents */
+.pgrid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:16px 18px;min-width:0}
+.s12{grid-column:span 12}.s8{grid-column:span 8}.s7{grid-column:span 7}.s5{grid-column:span 5}.s4{grid-column:span 4}
+@media (max-width:860px){.pgrid>*{grid-column:1/-1}}
+.goal-num{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,5vw,2.8rem);font-variant-numeric:tabular-nums;line-height:1.1;margin-block:4px 10px}
+.goal-num span{font-size:.45em;color:var(--ink-2);font-weight:500}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:600px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi b{font-family:var(--f-display);font-size:2rem;font-weight:800;font-variant-numeric:tabular-nums;display:block;line-height:1.1}
+.kpi span{color:var(--ink-2);font-size:.86rem}
+.stage-row{display:grid;grid-template-columns:minmax(0,1fr) 90px 34px;gap:10px;align-items:center;padding-block:7px;border-bottom:1px dashed var(--line);font-size:.95rem}
+.stage-row:last-child{border-bottom:0}
+.stage-row em{font-style:normal;font-variant-numeric:tabular-nums;color:var(--ink-2);text-align:right;font-size:.85rem}
+.chart{margin-top:8px;overflow-x:auto}
+.chart svg{display:block;width:100%;min-width:320px;height:auto}
+.c-grid{stroke:var(--line);stroke-width:1}
+.c-line{stroke:var(--turq);stroke-width:3;fill:none;stroke-linejoin:round}
+.c-area{fill:var(--turq-soft);opacity:.7}
+.c-dot{fill:var(--paper);stroke:var(--turq);stroke-width:3}
+.c-goal{stroke:var(--gold);stroke-width:2;stroke-dasharray:6 6}
+.c-txt{fill:var(--ink-2);font-size:12px;font-family:var(--f-display)}
+.c-gtxt{fill:var(--gold-deep);font-size:12px;font-family:var(--f-display);font-weight:700}
+.sample .c-line{stroke-dasharray:7 7;opacity:.6}.sample .c-area{opacity:.3}
+.tipbox{background:var(--gold-soft);border-color:var(--gold)}
+.tipbox p{font-size:1.08rem}
+.form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:10px}
+@media (max-width:760px){.form{grid-template-columns:1fr}}
+label.f{display:grid;gap:4px;font-size:.88rem;color:var(--ink-2)}
+input,select{font:inherit;font-size:1rem;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--ground);color:var(--ink);width:100%}
+input.bad{border-color:var(--no);animation:shake .4s}
+
+/* overlay & fx */
+.overlay{position:fixed;inset:0;background:rgba(8,22,30,.55);display:grid;place-items:center;padding:16px;z-index:50}
+.modal{background:var(--paper);border-radius:var(--r-lg);padding:24px;max-width:420px;width:100%;text-align:center;display:grid;gap:12px;justify-items:center}
+.modal svg{width:130px;height:130px}
+.modal .row{margin-top:4px}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:14px;z-index:40;max-width:calc(100% - 32px);text-align:center;font-weight:700}
+.spark{position:fixed;width:10px;height:10px;border-radius:2px;pointer-events:none;z-index:60;animation:spark .8s ease-out forwards}
+
+@keyframes ring{0%{transform:scale(.8);opacity:1}100%{transform:scale(1.35);opacity:0}}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+@keyframes wob{0%,100%{rotate:0deg}30%{rotate:-5deg}60%{rotate:5deg}}
+@keyframes wob2{0%,100%{rotate:0deg}25%{rotate:-14deg}75%{rotate:14deg}}
+@keyframes grow{0%{transform:scale(.6)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@keyframes glow{0%,100%{box-shadow:0 4px 0 var(--turq-deep),0 0 0 0 var(--gold)}50%{box-shadow:0 4px 0 var(--turq-deep),0 0 0 8px var(--gold-soft)}}
+@keyframes rise{from{transform:translateY(0)}to{transform:translateY(-720px)}}
+@keyframes spark{to{transform:translate(var(--dx),var(--dy)) rotate(260deg);opacity:0}}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}
+  .balloon{animation-duration:calc(var(--d) * 1.8)!important;animation-iteration-count:infinite!important}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle class="bm-disc" cx="20" cy="20" r="19"/><circle class="bm-line" cx="20" cy="20" r="12" stroke-width="2.4"/><path class="bm-line" stroke-width="2.2" d="M9 15 Q20 21 31 15 M9 25 Q20 19 31 25 M15 9 Q21 20 15 31 M25 9 Q19 20 25 31"/></svg>
+      <div><b>Кітап Дала</b><small id="tagline"></small></div>
+    </div>
+    <nav class="nav" id="nav">
+      <button data-go="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span></span></button>
+      <button data-go="story"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-9 0-14 6-14 14v2h2c8 0 12-6 12-16z"/><path d="M6 20l8-10"/></svg><span></span></button>
+      <button data-go="dict"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7"/></svg><span></span></button>
+      <button data-go="parents"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="17" cy="10" r="2.2"/><path d="M15.5 14.6c2 .3 3.5 2.3 3.5 5.4"/></svg><span></span></button>
+    </nav>
+    <div class="langs" id="langs" role="group" aria-label="Language"></div>
+  </header>
+  <div class="band" aria-hidden="true"></div>
+  <main>
+    <section id="scr-map"></section>
+    <section id="scr-lesson" hidden></section>
+    <section id="scr-story" hidden></section>
+    <section id="scr-dict" hidden></section>
+    <section id="scr-parents" hidden></section>
+  </main>
+</div>
+<div id="overlay" class="overlay" hidden><div class="modal" id="modal" role="dialog" aria-modal="true"></div></div>
+<div id="toast" class="toast" hidden role="status"></div>
+<div id="fx" aria-hidden="true"></div>
+<script>
+const LANGS={kk:{code:'kk-KZ',label:'ҚАЗ',name:'Қазақша'},ru:{code:'ru-RU',label:'РУС',name:'Русский'},en:{code:'en-US',label:'ENG',name:'English'}};
+
+const T={
+ru:{
+ tagline:'Путь по сказочной степи к беглому чтению', friend:'друг',
+ nav:{map:'Карта',story:'Моя сказка',dict:'Словарик',parents:'Родителям'},
+ hello:'Привет, {name}!',
+ mapLead:'Самрук ждёт тебя у Байтерека. Проходи стоянку за стоянкой — и научишься читать легко и быстро.',
+ stations:[{n:'Звуки и буквы',d:'Слушай звук и находи букву'},{n:'Слоги',d:'Лопай шарики с нужным слогом'},{n:'Слова',d:'Читай слова и находи картинки'},{n:'Фразы',d:'Собирай фразы из слов'},{n:'Сказки',d:'Читай короткие сказки вслух'},{n:'Беглое чтение',d:'Забег по словам на скорость'}],
+ goalName:'Байтерек',
+ lessonOf:'Урок {a} из {b}', locked:'Откроется после стоянки «{prev}»', done:'Пройдено', play:'Играть', again:'Ещё раз', allDone:'Все стоянки пройдены!',
+ listen:'Послушать', readAloud:'Читаю вслух', iRead:'Я прочитал(а)!', stop:'Готово', close:'Закрыть', back:'На карту',
+ findLetter:'Найди букву', popSyl:'Лопни шарик со слогом', pickPic:'Найди картинку к слову', readWord:'Прочитай слово вслух', buildPhrase:'Собери фразу', question:'Вопрос',
+ race:'Забег по словам', raceLead:'Нажми «Старт» и читай слова сверху вниз. Дочитал — жми «Финиш».', start:'Старт', finish:'Финиш', record:'Рекорд', wpm:'слов/мин', newRecord:'Новый рекорд!',
+ listening:'Слушаю…', heard:'Слышу: ', micOff:'Микрофон недоступен. Когда прочитаешь — нажми «Я прочитал(а)!»', notQuite:'почти! Попробуй ещё раз',
+ praise:['Молодец!','Отлично!','Здорово!','Ты настоящий батыр!','Вот это да!','Супер!'],
+ resultTitle:'Урок пройден!', fed:'Самрук получил {n} угощений', speed:'скорость {n} слов/мин', opened:'Открыта новая стоянка: «{n}»',
+ pet:{names:['Золотое яйцо','Птенец','Юный Самрук','Великий Самрук'], feed:'Корми Самрука чтением', toNext:'Ещё {n} до роста', max:'Самрук вырос и готов к полёту!', eaten:'угощений съедено'},
+ story:{title:'Сочини свою сказку', lead:'Выбери героя, место, находку и финал — и сказка сложится сама. Потом послушай её или прочитай.', hero:'Герой', place:'Где', object:'Что нашёл', action:'Чем закончилось', tell:'Послушать сказку', yours:'Твоя сказка', readSelf:'Прочитать самому'},
+ dict:{title:'Словарик', lead:'Слова, которые ты уже прочитал. Нажми на слово, чтобы услышать его. Серые карточки ждут своей очереди.', count:'{n} из {m} слов'},
+ par:{gate:'Вход для взрослых', gateQ:'Сколько будет {a} + {b}?', enter:'Войти', title:'Кабинет родителя', goal:'Цель — беглое чтение', goalText:'Ориентир к концу 1 класса — около {n} слов в минуту с пониманием прочитанного. Скорость измеряется в «Сказках» и «Забеге по словам».', stages:'Путь по стоянкам', speedT:'Скорость чтения по неделям', words:'Слов в словарике', lessons:'Занятий', best:'Лучшая скорость', streak:'Дней подряд', tip:'Совет на сегодня', settings:'Настройки', name:'Имя ребёнка', lang:'Язык обучения', session:'Длительность занятия в день', min:'мин', reset:'Сбросить прогресс этого языка', sure:'Нажмите ещё раз для сброса', resetOk:'Прогресс сброшен', sample:'Пример: так будет выглядеть график после первых занятий', speech:'Озвучка и проверка чтения вслух работают через браузер, лучше всего в Chrome. Если в системе нет казахского голоса, задания прозвучат русским голосом, а при недоступном микрофоне ребёнок подтверждает чтение кнопкой.', goalLbl:'цель'},
+ brk:{title:'Самрук устал', text:'Сегодня уже {n} минут занятий. Пора размяться, попить воды и посмотреть в окно!', cont:'Продолжить (для взрослых)'},
+ tips:['Читайте вместе 10–15 минут каждый день: регулярность важнее длины занятия.','Хвалите за старание, а не только за результат: «Ты так внимательно читал!»','Пусть ребёнок видит, как читаете вы. Семейное чтение перед сном — лучший пример.','Не исправляйте каждую ошибку сразу. Дайте дочитать предложение, потом вернитесь к слову.','Обсуждайте прочитанное: «Что было дальше? А как бы ты поступил?» — так растёт понимание.','Играйте в слова в дороге: называйте слова на букву «М» или придумывайте рифмы.','Выбирайте книги по интересам ребёнка — про динозавров, машины или лошадей.']
+},
+kk:{
+ tagline:'Ертегі даласы арқылы еркін оқуға апаратын жол', friend:'досым',
+ nav:{map:'Карта',story:'Менің ертегім',dict:'Сөздік',parents:'Ата-анаға'},
+ hello:'Сәлем, {name}!',
+ mapLead:'Самұрық сені Бәйтеректе күтіп тұр. Аялдамадан аялдамаға өт — сонда оңай әрі жылдам оқуды үйренесің.',
+ stations:[{n:'Дыбыстар мен әріптер',d:'Дыбысты тыңда да, әріпті тап'},{n:'Буындар',d:'Керек буыны бар шарды жар'},{n:'Сөздер',d:'Сөздерді оқы, суретін тап'},{n:'Сөйлемдер',d:'Сөздерден сөйлем құра'},{n:'Ертегілер',d:'Қысқа ертегілерді дауыстап оқы'},{n:'Жылдам оқу',d:'Сөздер бойынша жарыс'}],
+ goalName:'Бәйтерек',
+ lessonOf:'Сабақ {a} / {b}', locked:'«{prev}» аялдамасынан кейін ашылады', done:'Өтілді', play:'Ойнау', again:'Тағы да', allDone:'Барлық аялдамалар өтілді!',
+ listen:'Тыңдау', readAloud:'Дауыстап оқимын', iRead:'Оқыдым!', stop:'Болды', close:'Жабу', back:'Картаға',
+ findLetter:'Әріпті тап', popSyl:'Буыны бар шарды жар', pickPic:'Сөзге сай суретті тап', readWord:'Сөзді дауыстап оқы', buildPhrase:'Сөйлем құра', question:'Сұрақ',
+ race:'Сөздер жарысы', raceLead:'«Бастау» түймесін бас та, сөздерді жоғарыдан төмен қарай оқы. Оқып болған соң «Мәре» түймесін бас.', start:'Бастау', finish:'Мәре', record:'Рекорд', wpm:'сөз/мин', newRecord:'Жаңа рекорд!',
+ listening:'Тыңдап тұрмын…', heard:'Естідім: ', micOff:'Микрофон қолжетімсіз. Оқып болған соң «Оқыдым!» түймесін бас.', notQuite:'жақсы! Тағы бір рет байқап көр',
+ praise:['Жарайсың!','Керемет!','Тамаша!','Нағыз батырсың!','Міне, мықты!','Бәрекелді!'],
+ resultTitle:'Сабақ өтілді!', fed:'Самұрық {n} сый алды', speed:'жылдамдық {n} сөз/мин', opened:'Жаңа аялдама ашылды: «{n}»',
+ pet:{names:['Алтын жұмыртқа','Балапан','Жас Самұрық','Ұлы Самұрық'], feed:'Самұрықты оқумен қоректендір', toNext:'Өсуге тағы {n}', max:'Самұрық өсіп, ұшуға дайын!', eaten:'сый жиналды'},
+ story:{title:'Өз ертегіңді құрастыр', lead:'Кейіпкерді, жерді, олжаны және соңын таңда — ертегі өзі құрылады. Содан кейін оны тыңда немесе өзің оқы.', hero:'Кейіпкер', place:'Қайда', object:'Не тапты', action:'Соңы қалай', tell:'Ертегіні тыңдау', yours:'Сенің ертегің', readSelf:'Өзім оқимын'},
+ dict:{title:'Сөздік', lead:'Сен оқыған сөздер. Сөзді есту үшін оны бас. Сұр карточкалар өз кезегін күтуде.', count:'{m} сөздің {n}'},
+ par:{gate:'Ересектерге арналған кіру', gateQ:'{a} + {b} неше болады?', enter:'Кіру', title:'Ата-ана кабинеті', goal:'Мақсат — еркін оқу', goalText:'1-сыныптың соңына қарай бағдар — мәтінді түсініп, минутына шамамен {n} сөз оқу. Жылдамдық «Ертегілер» мен «Сөздер жарысында» өлшенеді.', stages:'Аялдамалар бойынша жол', speedT:'Апта бойынша оқу жылдамдығы', words:'Сөздіктегі сөздер', lessons:'Сабақтар', best:'Ең жоғары жылдамдық', streak:'Қатарынан күн', tip:'Бүгінгі кеңес', settings:'Баптаулар', name:'Баланың аты', lang:'Оқыту тілі', session:'Күнделікті сабақ ұзақтығы', min:'мин', reset:'Осы тілдегі прогресті тазалау', sure:'Тазалау үшін тағы бір рет басыңыз', resetOk:'Прогресс тазаланды', sample:'Мысал: алғашқы сабақтардан кейін график осылай көрінеді', speech:'Дыбыстау мен дауыстап оқуды тексеру браузер арқылы жұмыс істейді, Chrome ұсынылады. Жүйеде қазақша дауыс болмаса, тапсырмалар орысша дауыспен оқылады, ал микрофон қолжетімсіз болса, бала оқығанын түймемен растайды.', goalLbl:'мақсат'},
+ brk:{title:'Самұрық шаршады', text:'Бүгін {n} минут шұғылдандыңыз. Денені қозғалтып, су ішіп, терезеге қарайтын уақыт келді!', cont:'Жалғастыру (ересектерге)'},
+ tips:['Күн сайын 10–15 минут бірге оқыңыз: сабақтың ұзақтығынан гөрі тұрақтылық маңызды.','Нәтижені ғана емес, талпынысты да мақтаңыз: «Сен қандай мұқият оқыдың!»','Бала сіздің кітап оқығаныңызды көрсін. Ұйқы алдындағы отбасылық оқу — ең жақсы үлгі.','Әр қатені бірден түзетпеңіз. Сөйлемді аяқтауға мүмкіндік беріп, содан кейін сөзге оралыңыз.','Оқығанды талқылаңыз: «Одан кейін не болды? Сен не істер едің?» — түсіну осылай дамиды.','Жолда сөз ойындарын ойнаңыз: «М» әрпінен басталатын сөздерді атаңыз немесе ұйқас ойлап табыңыз.','Кітаптарды баланың қызығушылығына қарай таңдаңыз — динозаврлар, көліктер немесе жылқылар туралы.']
+},
+en:{
+ tagline:'A journey across the fairy-tale steppe to fluent reading', friend:'friend',
+ nav:{map:'Map',story:'My story',dict:'Word book',parents:'Parents'},
+ hello:'Hi, {name}!',
+ mapLead:'Samruk is waiting for you at Baiterek. Travel from camp to camp and you’ll learn to read easily and quickly.',
+ stations:[{n:'Sounds & letters',d:'Listen to a sound and find the letter'},{n:'Word families',d:'Pop the balloon with the right sound'},{n:'Words',d:'Read words and find the pictures'},{n:'Sentences',d:'Build sentences from words'},{n:'Stories',d:'Read short stories out loud'},{n:'Fluent reading',d:'A speed race through words'}],
+ goalName:'Baiterek',
+ lessonOf:'Lesson {a} of {b}', locked:'Opens after the “{prev}” camp', done:'Done', play:'Play', again:'Again', allDone:'Every camp is complete!',
+ listen:'Listen', readAloud:'Read aloud', iRead:'I read it!', stop:'Done', close:'Close', back:'Back to map',
+ findLetter:'Find the letter', popSyl:'Pop the balloon with the sound', pickPic:'Find the picture for the word', readWord:'Read the word out loud', buildPhrase:'Build the sentence', question:'Question',
+ race:'Word race', raceLead:'Press “Start” and read the words from top to bottom. When you finish, press “Finish”.', start:'Start', finish:'Finish', record:'Best', wpm:'words/min', newRecord:'New record!',
+ listening:'Listening…', heard:'I hear: ', micOff:'The microphone isn’t available. When you finish reading, press “I read it!”', notQuite:'almost! Try again',
+ praise:['Well done!','Great job!','Wonderful!','You’re a real hero!','Wow!','Super!'],
+ resultTitle:'Lesson complete!', fed:'Samruk got {n} treats', speed:'speed {n} words/min', opened:'New camp unlocked: “{n}”',
+ pet:{names:['Golden egg','Chick','Young Samruk','Great Samruk'], feed:'Feed Samruk by reading', toNext:'{n} more to grow', max:'Samruk is grown and ready to fly!', eaten:'treats eaten'},
+ story:{title:'Make up your own story', lead:'Pick a hero, a place, a find and an ending, and the story builds itself. Then listen to it or read it yourself.', hero:'Hero', place:'Where', object:'What it found', action:'How it ends', tell:'Listen to the story', yours:'Your story', readSelf:'Read it myself'},
+ dict:{title:'Word book', lead:'Words you have already read. Tap a word to hear it. Grey cards are still waiting for you.', count:'{n} of {m} words'},
+ par:{gate:'Grown-ups only', gateQ:'What is {a} + {b}?', enter:'Enter', title:'Parent room', goal:'Goal: fluent reading', goalText:'A common benchmark by the end of first grade is about {n} words per minute with understanding. Speed is measured in “Stories” and the “Word race”.', stages:'Journey by camp', speedT:'Reading speed by week', words:'Words in word book', lessons:'Lessons', best:'Top speed', streak:'Day streak', tip:'Tip of the day', settings:'Settings', name:'Child’s name', lang:'Learning language', session:'Daily session length', min:'min', reset:'Reset progress for this language', sure:'Press again to reset', resetOk:'Progress reset', sample:'Example: this is how the chart will look after the first lessons', speech:'Voice prompts and read-aloud checks run in the browser; Chrome works best. If the microphone isn’t available, your child confirms reading with a button.', goalLbl:'goal'},
+ brk:{title:'Samruk is tired', text:'That’s {n} minutes of practice today. Time to stretch, drink some water and look out the window!', cont:'Continue (grown-ups)'},
+ tips:['Read together for 10–15 minutes every day: regular practice matters more than long sessions.','Praise effort, not just results: “You read that so carefully!”','Let your child see you reading. A family story at bedtime is the best example.','Don’t correct every mistake right away. Let them finish the sentence, then go back to the word.','Talk about what you read: “What happened next? What would you do?” That’s how understanding grows.','Play word games on the go: name words that start with “M” or think of rhymes.','Choose books that match your child’s interests: dinosaurs, cars or horses.']
+}};
+
+const DATA={
+ru:{goal:40,
+ letters:[{L:'А',w:'арбуз',e:'🍉'},{L:'Б',w:'банан',e:'🍌'},{L:'Д',w:'дом',e:'🏠'},{L:'К',w:'кот',e:'🐱'},{L:'Л',w:'луна',e:'🌙'},{L:'М',w:'мяч',e:'⚽'},{L:'Р',w:'рыба',e:'🐟'},{L:'С',w:'солнце',e:'☀️'},{L:'Т',w:'торт',e:'🎂'},{L:'У',w:'утка',e:'🦆'},{L:'Ш',w:'шар',e:'🎈'},{L:'Я',w:'яблоко',e:'🍎'}],
+ syl:['ма','па','ла','ра','со','ку','ры','ба','ду','ша','ми','но'],
+ words:[{w:'кот',e:'🐱'},{w:'дом',e:'🏠'},{w:'мяч',e:'⚽'},{w:'сыр',e:'🧀'},{w:'сок',e:'🧃'},{w:'лиса',e:'🦊'},{w:'рыба',e:'🐟'},{w:'луна',e:'🌙'},{w:'утка',e:'🦆'},{w:'мама',e:'👩'},{w:'папа',e:'👨'},{w:'книга',e:'📖'},{w:'звезда',e:'⭐'},{w:'гора',e:'⛰️'},{w:'цветок',e:'🌸'},{w:'сова',e:'🦉'},{w:'конь',e:'🐴'},{w:'торт',e:'🎂'}],
+ phrases:[{p:'Кот спит на окне.',e:'🐱'},{p:'Мама читает книгу.',e:'📖'},{p:'Утка плывёт по реке.',e:'🦆'},{p:'Солнце светит ярко.',e:'☀️'},{p:'Конь бежит по степи.',e:'🐴'},{p:'У Айи красный мяч.',e:'⚽'}],
+ stories:[
+  {title:'Маленький жеребёнок',t:'В степи жил маленький жеребёнок. Однажды он потерял маму. Жеребёнок забрался на холм и огляделся. Мама паслась у реки! Он весело побежал к ней.',q:'Где паслась мама?',opts:['у реки','в лесу','на горе']},
+  {title:'Звёздочка',t:'Вечером в небе зажглась звёздочка. Айя смотрела в окно. Она помахала звёздочке рукой. А звёздочка ей подмигнула.',q:'Кому помахала Айя?',opts:['звёздочке','луне','птице']},
+  {title:'Яблоки',t:'У дедушки в саду растёт большая яблоня. Осенью яблоки краснеют. Я собираю их в корзину. Дедушка говорит мне спасибо.',q:'Когда краснеют яблоки?',opts:['осенью','зимой','весной']}],
+ builder:{tpl:'Однажды {place} гулял {hero}. Вдруг он увидел {object}! {Hero} взял находку и {action}. С того дня все стали дружить.',
+  hero:[{t:'смелый жеребёнок',e:'🐴'},{t:'маленький котёнок',e:'🐱'},{t:'мудрый филин',e:'🦉'}],
+  place:[{t:'высоко в горах',e:'⛰️'},{t:'в широкой степи',e:'🌾'},{t:'в густом лесу',e:'🌲'}],
+  object:[{t:'золотое яйцо',e:'🥚'},{t:'волшебную книгу',e:'📖'},{t:'яркую звезду',e:'⭐'}],
+  action:[{t:'подарил её другу',e:'🎁'},{t:'отнёс её домой',e:'🏠'},{t:'показал её всем друзьям',e:'👀'}]}
+},
+kk:{goal:40,
+ letters:[{L:'А',w:'алма',e:'🍎'},{L:'Б',w:'балық',e:'🐟'},{L:'Д',w:'доп',e:'⚽'},{L:'Ж',w:'жұлдыз',e:'⭐'},{L:'И',w:'ит',e:'🐶'},{L:'К',w:'кітап',e:'📖'},{L:'Қ',w:'құс',e:'🐦'},{L:'М',w:'мысық',e:'🐱'},{L:'Н',w:'нан',e:'🍞'},{L:'С',w:'су',e:'💧'},{L:'Т',w:'тау',e:'⛰️'},{L:'Ү',w:'үй',e:'🏠'}],
+ syl:['ба','ла','ма','на','та','да','са','қа','лы','сы','ты','ал'],
+ words:[{w:'ат',e:'🐴'},{w:'ай',e:'🌙'},{w:'үй',e:'🏠'},{w:'су',e:'💧'},{w:'нан',e:'🍞'},{w:'алма',e:'🍎'},{w:'мысық',e:'🐱'},{w:'ит',e:'🐶'},{w:'құс',e:'🐦'},{w:'күн',e:'☀️'},{w:'гүл',e:'🌸'},{w:'бала',e:'🧒'},{w:'кітап',e:'📖'},{w:'жұлдыз',e:'⭐'},{w:'тау',e:'⛰️'},{w:'балық',e:'🐟'},{w:'доп',e:'⚽'},{w:'қар',e:'❄️'}],
+ phrases:[{p:'Мысық ұйықтап жатыр.',e:'🐱'},{p:'Ат жүгіріп келеді.',e:'🐴'},{p:'Күн жарқырап тұр.',e:'☀️'},{p:'Бала кітап оқиды.',e:'📖'},{p:'Құс ұшып барады.',e:'🐦'},{p:'Анам нан пісірді.',e:'🍞'}],
+ stories:[
+  {title:'Кішкентай құлын',t:'Далада кішкентай құлын өмір сүрді. Бір күні ол анасын жоғалтып алды. Құлын төбеге шығып, айналасына қарады. Анасы өзен жағасында жайылып жүр екен! Ол қуанып, анасына қарай жүгірді.',q:'Анасы қайда жайылып жүрді?',opts:['өзен жағасында','орманда','тауда']},
+  {title:'Жұлдызша',t:'Кешке аспанда жұлдызша жанды. Айя терезеден қарап отырды. Ол жұлдызшаға қол бұлғады. Жұлдызша оған жымың етті.',q:'Айя кімге қол бұлғады?',opts:['жұлдызшаға','айға','құсқа']},
+  {title:'Алмалар',t:'Атамның бағында үлкен алма ағашы бар. Күзде алмалар қызарады. Мен алмаларды себетке жинаймын. Атам маған рахмет айтады.',q:'Алмалар қашан қызарады?',opts:['күзде','қыста','көктемде']}],
+ builder:{tpl:'Бір күні {place} {hero} серуендеп жүрді. Кенет ол {object} көрді! {Hero} оны алып, {action}. Сол күннен бастап бәрі дос болды.',
+  hero:[{t:'батыл құлын',e:'🐴'},{t:'кішкентай мысық',e:'🐱'},{t:'ақылды үкі',e:'🦉'}],
+  place:[{t:'биік тауда',e:'⛰️'},{t:'кең далада',e:'🌾'},{t:'қалың орманда',e:'🌲'}],
+  object:[{t:'алтын жұмыртқаны',e:'🥚'},{t:'сиқырлы кітапты',e:'📖'},{t:'жарық жұлдызды',e:'⭐'}],
+  action:[{t:'досына сыйлады',e:'🎁'},{t:'үйіне апарды',e:'🏠'},{t:'барлық достарына көрсетті',e:'👀'}]}
+},
+en:{goal:50,
+ letters:[{L:'A',w:'apple',e:'🍎'},{L:'B',w:'ball',e:'⚽'},{L:'C',w:'cat',e:'🐱'},{L:'D',w:'dog',e:'🐶'},{L:'E',w:'egg',e:'🥚'},{L:'F',w:'fish',e:'🐟'},{L:'H',w:'hat',e:'🎩'},{L:'M',w:'moon',e:'🌙'},{L:'P',w:'pig',e:'🐷'},{L:'R',w:'rabbit',e:'🐰'},{L:'S',w:'sun',e:'☀️'},{L:'T',w:'tree',e:'🌳'}],
+ syl:['at','an','ig','op','un','en','it','og','ap','ug','ed','in'],
+ words:[{w:'cat',e:'🐱'},{w:'dog',e:'🐶'},{w:'sun',e:'☀️'},{w:'hat',e:'🎩'},{w:'pig',e:'🐷'},{w:'bus',e:'🚌'},{w:'bed',e:'🛏️'},{w:'fox',e:'🦊'},{w:'cup',e:'☕'},{w:'egg',e:'🥚'},{w:'fish',e:'🐟'},{w:'frog',e:'🐸'},{w:'moon',e:'🌙'},{w:'star',e:'⭐'},{w:'tree',e:'🌳'},{w:'book',e:'📖'},{w:'duck',e:'🦆'},{w:'cake',e:'🎂'}],
+ phrases:[{p:'The cat is on the bed.',e:'🐱'},{p:'I see a red bus.',e:'🚌'},{p:'The fox can run.',e:'🦊'},{p:'Mom reads a book.',e:'📖'},{p:'The sun is hot.',e:'☀️'},{p:'A frog sits on a log.',e:'🐸'}],
+ stories:[
+  {title:'The Little Foal',t:'A little foal lived on the steppe. One day he could not find his mom. He ran up a hill and looked around. His mom was by the river! He ran to her with joy.',q:'Where was his mom?',opts:['by the river','in the forest','on a boat']},
+  {title:'Little Star',t:'At night a little star came out. Aya looked out the window. She waved to the star. The star winked back at her.',q:'Who did Aya wave to?',opts:['the star','the moon','a bird']},
+  {title:'Apples',t:'Grandpa has a big apple tree. In autumn the apples turn red. I put them in a basket. Grandpa says thank you.',q:'When do the apples turn red?',opts:['in autumn','in winter','in spring']}],
+ builder:{tpl:'One day {hero} was walking {place}. Suddenly it saw {object}! {Hero} picked it up and {action}. From that day on, everyone was friends.',
+  hero:[{t:'a brave foal',e:'🐴'},{t:'a little kitten',e:'🐱'},{t:'a wise owl',e:'🦉'}],
+  place:[{t:'high in the mountains',e:'⛰️'},{t:'across the wide steppe',e:'🌾'},{t:'in a deep forest',e:'🌲'}],
+  object:[{t:'a golden egg',e:'🥚'},{t:'a magic book',e:'📖'},{t:'a bright star',e:'⭐'}],
+  action:[{t:'gave it to a friend',e:'🎁'},{t:'carried it home',e:'🏠'},{t:'showed it to everyone',e:'👀'}]}
+}};
+</script>
+<script>
+(function(){
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=(s,o)=>s.replace(/\{(\w+)\}/g,(_,k)=>o[k]!==undefined?o[k]:'');
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const sample=(a,n)=>shuffle(a).slice(0,n);
+const pad=n=>String(n).padStart(2,'0');
+const dstr=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const today=()=>dstr(new Date());
+const LESSONS_PER=3, PET_T=[0,15,45,100];
+
+/* ---------- state ---------- */
+const KEY='kitap-dala-v1';
+let S={name:'',lang:'ru',session:15,fed:0,langs:{},days:{}};
+try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const t=()=>T[S.lang], D=()=>DATA[S.lang];
+function P(){return S.langs[S.lang]||(S.langs[S.lang]={lessons:[0,0,0,0,0,0],stars:[[],[],[],[],[],[]],words:[],wpm:[],log:[]})}
+const unlocked=i=>i<=0||(i<6&&P().lessons[i-1]>=LESSONS_PER);
+function currentStation(){const p=P();for(let i=0;i<6;i++)if(p.lessons[i]<LESSONS_PER)return i;return 5}
+const petStage=f=>f>=PET_T[3]?3:f>=PET_T[2]?2:f>=PET_T[1]?1:0;
+function addWord(item){const p=P();if(!p.words.includes(item.w))p.words.push(item.w)}
+
+/* ---------- icons ---------- */
+const I={
+ speak:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>',
+ mic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+ check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>',
+ x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+ play:'<svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>',
+ star:on=>`<svg viewBox="0 0 24 24" class="bstar ${on?'':'off'}"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>`
+};
+
+/* ---------- Samruk ---------- */
+function petSVG(st){
+ const G='#F2B233',GD='#C98A0B',GL='#FFE49A',T1='#1E9AA0',T2='#0F6E73',B='#E4572E',E='#1B2A33';
+ const horn=(x,y,s,c)=>`<path transform="translate(${x} ${y}) scale(${s})" d="M0 2 C-3 -9 -15 -10 -15 -2 C-15 4 -9 5 -7 1 M0 2 C3 -9 15 -10 15 -2 C15 4 9 5 7 1 M0 2 V12" fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round"/>`;
+ const eyes=(y,dx)=>`<g class="eyes"><circle cx="${100-dx}" cy="${y}" r="4.6" fill="${E}"/><circle cx="${100+dx}" cy="${y}" r="4.6" fill="${E}"/><circle cx="${101.5-dx}" cy="${y-1.6}" r="1.5" fill="#fff"/><circle cx="${101.5+dx}" cy="${y-1.6}" r="1.5" fill="#fff"/></g>`;
+ const branch=`<path d="M6 178 C60 170 140 172 194 160" stroke="#8A6A4A" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M150 168 l18 -20" stroke="#8A6A4A" stroke-width="6" stroke-linecap="round"/><ellipse cx="170" cy="146" rx="13" ry="7" fill="#8DB65F" transform="rotate(-35 170 146)"/><ellipse cx="30" cy="166" rx="12" ry="6" fill="#8DB65F" transform="rotate(20 30 166)"/>`;
+ const nest=`<path d="M50 160 C62 188 138 188 150 160 C130 170 70 170 50 160Z" fill="#B08655"/><path d="M56 166 C80 176 120 176 144 166" stroke="#8A6A4A" stroke-width="2.5" fill="none"/>`;
+ let body='';
+ if(st===0) body=`<g class="wobble"><ellipse cx="100" cy="112" rx="38" ry="48" fill="${G}" stroke="${GD}" stroke-width="3"/>${horn(100,110,1.3,GD)}<path d="M67 134 Q100 146 133 134" stroke="${GD}" stroke-width="3" fill="none"/><ellipse cx="84" cy="88" rx="7" ry="13" fill="${GL}" opacity=".85"/></g>`;
+ else if(st===1) body=`<circle cx="100" cy="96" r="28" fill="${GL}"/>${eyes(92,10)}<path d="M94 101 L106 101 L100 111Z" fill="${B}"/><path d="M92 70 q6 -16 9 -1 q6 -13 9 2" stroke="${G}" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M62 120 L72 110 L82 122 L92 108 L102 122 L112 108 L122 122 L132 110 L138 120 C140 150 124 164 100 164 C76 164 60 150 62 120Z" fill="${G}" stroke="${GD}" stroke-width="3" stroke-linejoin="round"/>${horn(100,138,1,GD)}`;
+ else if(st===2) body=`<ellipse cx="60" cy="118" rx="15" ry="27" fill="${T1}" transform="rotate(28 60 118)"/><ellipse cx="140" cy="118" rx="15" ry="27" fill="${T1}" transform="rotate(-28 140 118)"/><ellipse cx="100" cy="124" rx="40" ry="38" fill="${G}"/><ellipse cx="100" cy="132" rx="23" ry="22" fill="${GL}"/>${horn(100,128,.9,GD)}<circle cx="100" cy="76" r="28" fill="${G}"/>${eyes(74,10)}<path d="M93 83 L107 83 L100 94Z" fill="${B}"/><path d="M90 50 q4 -18 10 -2 q6 -16 11 2" stroke="${T1}" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+ else body=`<path d="M100 118 C70 78 30 68 6 82 C26 90 32 102 24 112 C42 108 50 118 44 130 C64 122 80 130 100 140Z" fill="${T1}"/><path d="M100 118 C130 78 170 68 194 82 C174 90 168 102 176 112 C158 108 150 118 156 130 C136 122 120 130 100 140Z" fill="${T1}"/><path d="M100 122 C80 98 50 94 34 102 C52 108 56 120 100 136Z" fill="${T2}" opacity=".55"/><path d="M100 122 C120 98 150 94 166 102 C148 108 144 120 100 136Z" fill="${T2}" opacity=".55"/><path d="M88 148 L70 180 L92 164 L100 188 L108 164 L130 180 L112 148Z" fill="${GD}"/><ellipse cx="100" cy="124" rx="26" ry="32" fill="${G}"/><ellipse cx="100" cy="132" rx="15" ry="18" fill="${GL}"/>${horn(100,126,.8,GD)}<circle cx="100" cy="76" r="22" fill="${G}"/>${eyes(74,8)}<path d="M94 82 L106 82 L100 92Z" fill="${B}"/><path d="M100 55 C98 40 104 32 112 24 M100 55 C93 44 90 36 91 27 M100 55 C106 46 115 42 124 42" stroke="${GD}" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="112" cy="24" r="4.5" fill="${T1}"/><circle cx="91" cy="27" r="4.5" fill="${T1}"/><circle cx="124" cy="42" r="4.5" fill="${T1}"/>`;
+ return `<svg viewBox="0 0 200 200" role="img" aria-label="${esc(t().pet.names[st])}">${st<3?branch:''}${body}${st<3?nest:''}</svg>`;
+}
+
+/* ---------- speech ---------- */
+const synth=window.speechSynthesis;
+let voices=[];
+function loadVoices(){try{voices=synth?synth.getVoices():[]}catch(e){voices=[]}}
+loadVoices(); try{if(synth)synth.onvoiceschanged=loadVoices}catch(e){}
+function pickVoice(code){
+ const lc=code.toLowerCase(),p=lc.slice(0,2),vl=v=>(v.lang||'').replace('_','-').toLowerCase();
+ return voices.find(v=>vl(v)===lc)||voices.find(v=>vl(v).startsWith(p))||(p==='kk'?voices.find(v=>vl(v).startsWith('ru')):null);
+}
+function speak(text,o={}){
+ if(!synth){o.onend&&o.onend();return}
+ try{synth.cancel();const u=new SpeechSynthesisUtterance(text);const code=LANGS[S.lang].code;const v=pickVoice(code);
+  if(v){u.voice=v;u.lang=v.lang}else u.lang=code;
+  u.rate=o.rate||.85;u.pitch=1.08;
+  if(o.onboundary)u.onboundary=o.onboundary;
+  u.onend=()=>o.onend&&o.onend();
+  synth.speak(u);
+ }catch(e){o.onend&&o.onend()}
+}
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let micBlocked=false, rec=null;
+const micOK=()=>!!SR&&!micBlocked;
+function stopRec(){if(rec){try{rec.onend=null;rec.abort()}catch(e){}rec=null}}
+function listen({continuous=false,onText,onEnd,onError}){
+ const r=new SR();r.lang=LANGS[S.lang].code;r.interimResults=true;r.continuous=continuous;r.maxAlternatives=3;
+ r.onresult=e=>{let best='',all=[];for(let i=0;i<e.results.length;i++){best+=' '+e.results[i][0].transcript;for(let k=0;k<e.results[i].length;k++)all.push(e.results[i][k].transcript)}onText&&onText(best.trim(),all.join(' '))};
+ r.onerror=e=>{if(['not-allowed','service-not-allowed','audio-capture','language-not-supported'].includes(e.error))micBlocked=true;onError&&onError(e.error)};
+ r.onend=()=>onEnd&&onEnd();
+ try{r.start()}catch(e){micBlocked=true;setTimeout(()=>onError&&onError('start'),0)}
+ rec=r;return r;
+}
+const norm=s=>s.toLowerCase().replace(/ё/g,'е').replace(/[^\p{L}\s]/gu,' ').replace(/\s+/g,' ').trim();
+function lev(a,b){const m=a.length,n=b.length;if(Math.abs(m-n)>2)return 9;let prev=Array.from({length:n+1},(_,i)=>i);for(let i=1;i<=m;i++){const cur=[i];for(let j=1;j<=n;j++)cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=cur}return prev[n]}
+const near=(h,w)=>h===w||(w.length>=4&&lev(h,w)<=1);
+function matchWord(txt,w){const n=norm(w);return norm(txt).split(' ').some(h=>near(h,n))}
+
+/* follow reading along spans with the mic */
+function follow(spans,onProgress){
+ const targets=spans.map(s=>norm(s.textContent));let pos=0,active=true;
+ const run=()=>{const base=pos;
+  listen({continuous:true,
+   onText:(best)=>{let p=base;for(const h of norm(best).split(' ')){for(let k=p;k<Math.min(p+3,targets.length);k++){if(near(h,targets[k])){p=k+1;break}}}
+    if(p>pos){for(let k=0;k<p;k++)spans[k].classList.add('read');pos=p;onProgress&&onProgress(pos)}},
+   onEnd:()=>{if(active&&!micBlocked)run()},onError:()=>{}});
+ };
+ run();
+ return ()=>{active=false;stopRec()};
+}
+function speakHL(spans,onend){
+ const offs=[];let c=0;spans.forEach(s=>{offs.push(c);c+=s.textContent.length+1});
+ const text=spans.map(s=>s.textContent).join(' ');
+ const clear=()=>spans.forEach(s=>s.classList.remove('on'));
+ speak(text,{rate:.8,onboundary:e=>{if(e.name&&e.name!=='word')return;let idx=0;for(let i=0;i<offs.length;i++)if(offs[i]<=e.charIndex)idx=i;clear();spans[idx]&&spans[idx].classList.add('on')},onend:()=>{clear();onend&&onend()}});
+}
+
+/* ---------- fx ---------- */
+function burst(el){
+ if(!el||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,cols=['#F2B233','#127F86','#C9533A','#9CBF6B'];
+ for(let i=0;i<16;i++){const s=document.createElement('i');s.className='spark';const a=Math.random()*Math.PI*2,d=60+Math.random()*100;
+  s.style.cssText=`left:${cx}px;top:${cy}px;background:${cols[i%4]};--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px`;$('#fx').appendChild(s);setTimeout(()=>s.remove(),900)}
+}
+function praise(el){const pr=t().praise;speak(pr[Math.floor(Math.random()*pr.length)]);burst(el)}
+let toastT;
+function toast(msg){const el=$('#toast');el.textContent=msg;el.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>el.hidden=true,2600)}
+function openModal(html){$('#modal').innerHTML=html;$('#overlay').hidden=false}
+function closeModal(){$('#overlay').hidden=true}
+
+/* ---------- router ---------- */
+let screen='map',timers=[],intervals=[],stopFollow=null,parentOk=false,ignoreLimit=false,L=null,limitTick=null;
+const later=(fn,ms)=>{const id=setTimeout(fn,ms);timers.push(id);return id};
+function stopAll(){try{synth&&synth.cancel()}catch(e){}stopRec();if(stopFollow){stopFollow();stopFollow=null}timers.forEach(clearTimeout);timers=[];intervals.forEach(clearInterval);intervals=[]}
+function go(s){
+ if(s==='parents'&&!parentOk)return gate(()=>{parentOk=true;go('parents')});
+ if(screen==='lesson'&&s!=='lesson')endTiming();
+ stopAll();screen=s;
+ ['map','lesson','story','dict','parents'].forEach(k=>$('#scr-'+k).hidden=k!==s);
+ $$('#nav button').forEach(b=>{if(b.dataset.go===s||(s==='lesson'&&b.dataset.go==='map'))b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+ ({map:renderMap,story:renderStory,dict:renderDict,parents:renderParents})[s]?.();
+ window.scrollTo(0,0);
+}
+function renderChrome(){
+ const tt=t();document.documentElement.lang=S.lang;
+ $('#tagline').textContent=tt.tagline;
+ $$('#nav button').forEach(b=>b.querySelector('span').textContent=tt.nav[b.dataset.go]);
+ $('#langs').innerHTML=Object.entries(LANGS).map(([k,v])=>`<button data-lang="${k}" aria-pressed="${k===S.lang}" title="${v.name}">${v.label}</button>`).join('');
+}
+function setLang(l){if(!LANGS[l]||l===S.lang)return;const back=screen==='lesson'?'map':screen;if(screen==='lesson')endTiming();stopAll();S.lang=l;save();renderChrome();screen='';go(back)}
+
+/* ---------- map ---------- */
+const PTS=[[150,488],[310,440],[520,478],[730,420],[540,336],[780,262]];
+function segD(i){const p0=PTS[i-1]||PTS[i],p1=PTS[i],p2=PTS[i+1],p3=PTS[i+2]||p2;
+ const c1=[p1[0]+(p2[0]-p0[0])/6,p1[1]+(p2[1]-p0[1])/6],c2=[p2[0]-(p3[0]-p1[0])/6,p2[1]-(p3[1]-p1[1])/6];
+ return `M${p1} C${c1} ${c2} ${p2}`}
+function mapSVG(){
+ const p=P(),tt=t();
+ const stars=[[60,40],[180,74],[300,28],[420,96],[520,44],[640,84],[700,30],[980,60],[40,150],[250,130],[860,40],[590,140]].map(([x,y])=>`<circle class="m-star" cx="${x}" cy="${y}" r="2.3"/>`).join('');
+ let trail='',done='';
+ for(let i=0;i<PTS.length-1;i++){trail+=`<path class="m-trail" d="${segD(i)}"/>`;if(p.lessons[i]>=LESSONS_PER)done+=`<path class="m-trail-done" d="${segD(i)}"/>`}
+ const allDone=p.lessons[5]>=LESSONS_PER;
+ trail+=`<path class="${allDone?'m-trail-done':'m-trail'}" d="M780,262 C820,250 860,230 895,212"/>`;
+ const yurts=PTS.map(([x,y],i)=>{
+  const stt=p.lessons[i]>=LESSONS_PER?'done':unlocked(i)?'current':'locked';
+  const best=Math.max(0,...p.stars[i]);
+  return `<g class="yurt ${stt}" data-play="${i}" role="button" tabindex="${stt==='locked'?-1:0}" aria-label="${i+1}. ${esc(tt.stations[i].n)}" transform="translate(${x} ${y})">
+   ${stt==='current'?'<circle class="ring" cx="0" cy="-16" r="40"/>':''}
+   <ellipse class="m-shadow" cx="0" cy="2" rx="36" ry="7"/>
+   <path class="dome" d="M-30 0 V-18 Q-30 -26 -22 -30 Q0 -48 22 -30 Q30 -26 30 -18 V0Z"/>
+   <path class="fband" d="M-30 -19 H30 V-14 H-30Z"/>
+   <path class="fband" d="M-21 -31 Q0 -42 21 -31 L18 -28 Q0 -37 -18 -28Z"/>
+   <rect class="door" x="-7" y="-15" width="14" height="15" rx="2"/>
+   ${stt==='locked'?'<g class="m-lock" transform="translate(0 -62)"><rect x="-8" y="-3" width="16" height="12" rx="2"/><path d="M-5 -3 V-7 a5 5 0 0 1 10 0 V-3" fill="none" stroke="currentColor" style="stroke:var(--ink-2)" stroke-width="2.4"/></g>':''}
+   ${stt==='done'?`<text class="m-label" y="-56" text-anchor="middle" style="fill:var(--gold-deep)">${'★'.repeat(best)}</text>`:''}
+   <text class="m-label" y="24" text-anchor="middle">${esc(tt.stations[i].n)}</text>
+  </g>`}).join('');
+ return `<svg viewBox="0 0 1000 560" role="img" aria-label="${esc(tt.nav.map)}">
+  <rect class="m-sky" width="1000" height="560"/>${stars}
+  <circle class="m-sun" cx="110" cy="100" r="34"/>
+  <ellipse class="m-cloud" cx="420" cy="112" rx="70" ry="16"/><ellipse class="m-cloud" cx="455" cy="98" rx="40" ry="16"/><ellipse class="m-cloud" cx="660" cy="70" rx="56" ry="12"/>
+  <path class="m-mount" d="M0,330 L90,250 L170,300 L300,188 L420,290 L520,222 L640,300 L760,168 L860,232 L940,150 L1000,190 L1000,560 L0,560Z"/>
+  <path class="m-snow" d="M300,188 L279,206 L291,203 L300,212 L310,202 L321,206Z M760,168 L739,186 L751,183 L760,192 L770,182 L781,186Z M940,150 L922,166 L933,163 L940,171 L948,162 L958,165Z"/>
+  <path class="m-hill" d="M0,380 C250,330 450,360 620,300 C760,250 860,205 1000,196 L1000,560 L0,560Z"/>
+  <path class="m-grass" d="M0,430 C220,380 420,450 640,410 C820,380 900,420 1000,400 L1000,560 L0,560Z"/>
+  <g transform="translate(905 0)"><circle class="bt-glow" cx="0" cy="104" r="36"/><path class="bt-trunk" d="M-7 208 L-3 130 L3 130 L7 208Z"/><path class="bt-branch" d="M-2 142 C-20 132 -30 112 -28 92 M2 142 C20 132 30 112 28 92 M0 134 C-10 120 -15 102 -13 86 M0 134 C10 120 15 102 13 86"/><circle class="bt-sphere" cx="0" cy="104" r="19"/><ellipse class="m-shadow" cx="0" cy="209" rx="30" ry="6"/><text class="m-label" y="62" text-anchor="middle">${esc(tt.goalName)}</text></g>
+  ${trail}${done}${yurts}
+ </svg>`;
+}
+function renderMap(){
+ const tt=t(),p=P(),cur=currentStation(),allDone=p.lessons[5]>=LESSONS_PER;
+ const st=petStage(S.fed),next=PET_T[st+1];
+ const pct=next?Math.round((S.fed-PET_T[st])/(next-PET_T[st])*100):100;
+ $('#scr-map').innerHTML=`
+ <div class="map-head">
+  <div><p class="eyebrow">${allDone?esc(tt.allDone):`${cur+1}. ${esc(tt.stations[cur].n)} · ${fmt(tt.lessonOf,{a:p.lessons[cur]+1,b:LESSONS_PER})}`}</p>
+  <h1>${fmt(tt.hello,{name:esc(S.name||tt.friend)})}</h1><p class="lead">${esc(tt.mapLead)}</p></div>
+  <button class="btn" data-play="${cur}">${I.play} ${tt.play}</button>
+ </div>
+ <div class="map-grid">
+  <div class="map-card">${mapSVG()}</div>
+  <aside class="pet-card">
+   <p class="eyebrow">${esc(tt.pet.feed)}</p>
+   ${petSVG(st)}
+   <h2>${esc(tt.pet.names[st])}</h2>
+   <div class="meter" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
+   <p class="small">${next?fmt(tt.pet.toNext,{n:next-S.fed}):esc(tt.pet.max)} · ${S.fed} ${esc(tt.pet.eaten)}</p>
+  </aside>
+ </div>
+ <div class="stations">${tt.stations.map((s,i)=>{
+  const stt=p.lessons[i]>=LESSONS_PER?'done':unlocked(i)?'current':'locked';
+  const best=Math.max(0,...p.stars[i]);
+  const meta=stt==='locked'?fmt(tt.locked,{prev:tt.stations[i-1].n}):stt==='done'?`${tt.done} <span class="sts">${'★'.repeat(best)}</span>`:fmt(tt.lessonOf,{a:p.lessons[i]+1,b:LESSONS_PER});
+  return `<button class="st ${stt}" data-play="${i}"><span class="num">${i+1}</span><b>${esc(s.n)}</b><small>${esc(s.d)}</small><span class="meta">${meta}</span></button>`}).join('')}
+ </div>`;
+}
+
+/* ---------- time limit ---------- */
+function usedToday(){return (S.days[today()]||0)+(L&&L.start?Date.now()-L.start:0)}
+const overLimit=()=>!ignoreLimit&&usedToday()>=S.session*60000;
+function endTiming(){if(L&&L.start){S.days[today()]=(S.days[today()]||0)+(Date.now()-L.start);L.start=null;save()}clearInterval(limitTick)}
+function showBreak(onContinue){
+ const tt=t();
+ openModal(`${petSVG(Math.max(1,petStage(S.fed)))}<h2>${esc(tt.brk.title)}</h2><p>${fmt(tt.brk.text,{n:S.session})}</p><div class="row"><button class="btn" id="brk-map">${esc(tt.back)}</button><button class="btn alt" id="brk-go">${esc(tt.brk.cont)}</button></div>`);
+ speak(tt.brk.title);
+ $('#brk-map').onclick=()=>{closeModal();go('map')};
+ $('#brk-go').onclick=()=>gate(()=>{ignoreLimit=true;onContinue()});
+}
+function gate(ok){
+ const pt=t().par,a=3+Math.floor(Math.random()*6),b=4+Math.floor(Math.random()*6);
+ openModal(`<h2>${esc(pt.gate)}</h2><p>${fmt(pt.gateQ,{a,b})}</p><input id="gate-in" inputmode="numeric" autocomplete="off" aria-label="${fmt(pt.gateQ,{a,b})}"><div class="row"><button class="btn alt" id="gate-x">${esc(t().close)}</button><button class="btn" id="gate-ok">${esc(pt.enter)}</button></div>`);
+ const inp=$('#gate-in');setTimeout(()=>inp.focus(),50);
+ const check=()=>{if(parseInt(inp.value,10)===a+b){closeModal();ok()}else{inp.classList.remove('bad');void inp.offsetWidth;inp.classList.add('bad')}};
+ $('#gate-ok').onclick=check;inp.onkeydown=e=>{if(e.key==='Enter')check()};
+ $('#gate-x').onclick=()=>{closeModal();if(screen==='lesson'&&L&&!L.start)go('map')};
+}
+
+/* ---------- lessons ---------- */
+function buildRounds(si){
+ const d=D(),p=P();
+ if(si===0)return sample(d.letters,8).map(item=>({type:'letter',item,opts:shuffle([item.L,...sample(d.letters.filter(x=>x.L!==item.L),3).map(x=>x.L)])}));
+ if(si===1)return sample(d.syl,8).map(item=>({type:'syl',item,pool:shuffle([item,...sample(d.syl.filter(x=>x!==item),4)])}));
+ if(si===2)return sample(d.words,8).map((item,k)=>({type:k%2?'read':'pick',item,opts:shuffle([item,...sample(d.words.filter(x=>x!==item),2)])}));
+ if(si===3)return sample(d.phrases,5).map(item=>({type:'phrase',item}));
+ if(si===4)return [{type:'story',item:d.stories[p.lessons[4]%d.stories.length]}];
+ return [{type:'race',items:sample(d.words,10).sort((a,b)=>a.w.length-b.w.length)}];
+}
+function startLesson(si){
+ if(!unlocked(si)){const tt=t();toast(fmt(tt.locked,{prev:tt.stations[si-1].n}));return}
+ if(overLimit())return showBreak(()=>startLesson(si));
+ go('lesson');
+ L={si,i:0,correct:0,miss:0,wpm:null,start:Date.now(),rounds:buildRounds(si)};
+ const tt=t();
+ $('#scr-lesson').innerHTML=`<div class="lesson"><div class="l-top"><button class="x" id="lx" aria-label="${esc(tt.close)}">${I.x}</button><div class="l-prog"><i id="lprog"></i></div><span class="l-title">${si+1}. ${esc(tt.stations[si].n)}</span></div><div id="lbody"></div></div>`;
+ $('#lx').onclick=()=>go('map');
+ armLimit();nextRound();
+}
+function armLimit(){clearInterval(limitTick);limitTick=setInterval(()=>{if(screen==='lesson'&&L&&L.start&&overLimit()){endTiming();stopAll();showBreak(()=>{L.start=Date.now();armLimit();nextRound()})}},15000)}
+function nextRound(){if(L.i>=L.rounds.length)return finish();$('#lprog').style.width=(L.i/L.rounds.length*100)+'%';const r=L.rounds[L.i];r.done=false;R[r.type](r,$('#lbody'),t())}
+function advance(ms){later(()=>{L.i++;nextRound()},ms)}
+
+const R={
+ letter(r,b,tt){
+  const say=()=>speak(`${tt.findLetter}. ${r.item.L}. ${r.item.L} — ${r.item.w}`);
+  b.innerHTML=`<div class="prompt"><button class="say" id="say" aria-label="${esc(tt.listen)}">${I.speak}</button><h2>${esc(tt.findLetter)}</h2>${synth?'':`<span class="peek">${esc(r.item.L)}</span>`}</div>
+  <div class="pic" aria-hidden="true">${r.item.e}</div>
+  <div class="tiles" style="margin-top:18px">${r.opts.map(o=>`<button class="tile" data-v="${esc(o)}">${esc(o)}<small>${esc(o.toLowerCase())}</small></button>`).join('')}</div>
+  <div class="hint" id="hint" aria-live="polite"></div>`;
+  $('#say').onclick=say;later(say,350);
+  $$('.tile',b).forEach(btn=>btn.onclick=()=>{
+   if(r.done||btn.classList.contains('no'))return;
+   if(btn.dataset.v===r.item.L){r.done=true;btn.classList.add('ok');L.correct++;$('#hint').textContent=`${r.item.L} — ${r.item.w}`;praise(btn);advance(1500)}
+   else{btn.classList.add('no');L.miss++;say()}
+  });
+ },
+ syl(r,b,tt){
+  const target=r.item,say=()=>speak(target),colors=['#F2B233','#7CC6C4','#F08A6C','#A9CF7A','#F6D36B'];
+  b.innerHTML=`<div class="prompt"><button class="say" id="say" aria-label="${esc(tt.listen)}">${I.speak}</button><h2>${esc(tt.popSyl)}</h2><span class="peek" id="peek" ${synth?'hidden':''}>${esc(target)}</span></div><div class="skyfield" id="field"></div>`;
+  const field=$('#field'),n=r.pool.length;
+  r.pool.forEach((s,k)=>{const el=document.createElement('button');el.className='balloon';el.textContent=s;
+   el.style.cssText=`--x:${k*(100/n)+1.5}%;--d:${7.5+Math.random()*3}s;--dl:${-(1.2+Math.random()*5.5)}s;--c:${colors[k%colors.length]}`;
+   el.onclick=()=>{if(r.done)return;
+    if(s===target){r.done=true;const tr=getComputedStyle(el).transform;el.style.animation='none';el.style.transform=tr;el.style.transition='scale .25s, opacity .25s';requestAnimationFrame(()=>{el.style.scale='1.5';el.style.opacity='0'});L.correct++;praise(el);advance(1000)}
+    else{el.classList.remove('wrong');void el.offsetWidth;el.classList.add('wrong');L.miss++;$('#peek').hidden=false;say()}};
+   field.appendChild(el)});
+  $('#say').onclick=say;later(say,350);
+ },
+ pick(r,b,tt){
+  b.innerHTML=`<div class="prompt"><h2>${esc(tt.pickPic)}</h2><button class="say sm" id="say" hidden aria-label="${esc(tt.listen)}">${I.speak}</button></div>
+  <div class="bigword" id="bw">${esc(r.item.w)}</div>
+  <div class="tiles three">${r.opts.map(o=>`<button class="tile" data-v="${esc(o.w)}">${o.e}</button>`).join('')}</div><div class="hint"></div>`;
+  $('#say').onclick=()=>speak(r.item.w);
+  $$('.tile',b).forEach(btn=>btn.onclick=()=>{
+   if(r.done||btn.classList.contains('no'))return;
+   if(btn.dataset.v===r.item.w){r.done=true;btn.classList.add('ok');$('#bw').classList.add('ok');addWord(r.item);L.correct++;speak(r.item.w);later(()=>praise(btn),700);advance(1700)}
+   else{btn.classList.add('no');L.miss++;$('#say').hidden=false}
+  });
+ },
+ read(r,b,tt){
+  b.innerHTML=`<div class="prompt"><h2>${esc(tt.readWord)}</h2></div>
+  <div class="pic" aria-hidden="true">${r.item.e}</div><div class="bigword" id="bw">${esc(r.item.w)}</div>
+  <div class="mic-status" id="ms" aria-live="polite">${micOK()?'':esc(tt.micOff)}</div>
+  <div class="row">${micOK()?`<button class="btn teal" id="mic">${I.mic} ${esc(tt.readAloud)}</button>`:''}<button class="btn" id="iread">${I.check} ${esc(tt.iRead)}</button><button class="btn alt" id="lis">${I.speak} ${esc(tt.listen)}</button></div>`;
+  const ms=$('#ms');
+  const win=()=>{if(r.done)return;r.done=true;stopRec();$('#bw').classList.add('ok');addWord(r.item);L.correct++;praise($('#bw'));advance(1400)};
+  $('#iread').onclick=win;$('#lis').onclick=()=>{stopRec();speak(r.item.w)};
+  const mic=$('#mic');
+  if(mic)mic.onclick=()=>{stopRec();try{synth&&synth.cancel()}catch(e){}let heard='';mic.classList.add('live');ms.textContent=tt.listening;
+   listen({onText:(best,all)=>{heard=best;ms.textContent=tt.heard+best;if(matchWord(all,r.item.w))win()},
+    onEnd:()=>{mic.classList.remove('live');if(!r.done)ms.textContent=heard?`${tt.heard}${heard} — ${tt.notQuite}`:''},
+    onError:()=>{mic.classList.remove('live');if(micBlocked){ms.textContent=tt.micOff;mic.remove()}}});
+  };
+ },
+ phrase(r,b,tt){
+  const words=r.item.p.replace(/[.!?]$/,'').split(' '),mark=r.item.p.slice(-1);
+  let order=shuffle(words.map((_,i)=>i));if(order.every((v,i)=>v===i))order.reverse();
+  b.innerHTML=`<div class="prompt"><h2>${esc(tt.buildPhrase)}</h2><button class="say sm" id="say" aria-label="${esc(tt.listen)}">${I.speak}</button></div>
+  <div class="pic" aria-hidden="true">${r.item.e}</div><div class="slots" id="slots" aria-live="polite"></div>
+  <div class="pool" id="pool">${order.map(i=>`<button class="chip" data-i="${i}">${esc(words[i])}</button>`).join('')}</div>`;
+  $('#say').onclick=()=>speak(r.item.p);
+  const slots=$('#slots');
+  const check=()=>{const placed=$$('.chip',slots);if(placed.length<words.length)return;
+   let ok=true;placed.forEach((c,k)=>{if(c.textContent!==words[k]){ok=false;c.classList.add('bad')}});
+   if(ok){r.done=true;slots.classList.add('ok');placed[placed.length-1].textContent+=mark;L.correct++;speak(r.item.p);later(()=>praise(slots),1600);advance(2600)}
+   else{L.miss++;later(()=>$$('.chip.bad',slots).forEach(c=>{$(`#pool .chip[data-i="${c.dataset.src}"]`).classList.remove('used');c.remove()}),800)}};
+  $$('#pool .chip').forEach(ch=>ch.onclick=()=>{if(r.done||ch.classList.contains('used'))return;ch.classList.add('used');
+   const c=document.createElement('button');c.className='chip';c.textContent=ch.textContent;c.dataset.src=ch.dataset.i;
+   c.onclick=()=>{if(r.done)return;ch.classList.remove('used');c.remove()};slots.appendChild(c);check()});
+ },
+ story(r,b,tt){
+  const s=r.item,tokens=s.t.split(/\s+/);
+  b.innerHTML=`<div class="prompt"><h2>${esc(s.title)}</h2></div>
+  <p class="story" id="story">${tokens.map(w=>`<span class="w">${esc(w)}</span>`).join(' ')}</p>
+  <div class="row" id="ctrl"><button class="btn teal" id="go">${I.mic} ${esc(tt.readAloud)}</button><button class="btn alt" id="lis">${I.speak} ${esc(tt.listen)}</button></div>
+  <div class="mic-status" id="ms" aria-live="polite"></div><div id="qa"></div>`;
+  const spans=$$('#story .w'),ms=$('#ms');let t0=0,iv;
+  $('#lis').onclick=()=>{if(t0)return;stopRec();speakHL(spans)};
+  $('#go').onclick=()=>{
+   if(!t0){try{synth&&synth.cancel()}catch(e){}t0=Date.now();spans.forEach(x=>x.classList.remove('read','on'));
+    $('#go').innerHTML=`${I.check} ${esc(tt.stop)} · <span class="timer" id="tm">0</span>`;$('#go').classList.add('live');$('#lis').hidden=true;
+    iv=setInterval(()=>{const tm=$('#tm');if(tm)tm.textContent=Math.floor((Date.now()-t0)/1000)},250);intervals.push(iv);
+    if(micOK()){ms.textContent=tt.listening;stopFollow=follow(spans,pos=>{ms.textContent='';if(pos>=spans.length)$('#go').click()})}else ms.textContent=tt.micOff;
+   }else{
+    clearInterval(iv);if(stopFollow){stopFollow();stopFollow=null}
+    const sec=(Date.now()-t0)/1000;spans.forEach(x=>x.classList.add('read'));
+    if(sec>=4){L.wpm=Math.min(150,Math.round(tokens.length/(sec/60)));ms.innerHTML=`<p class="wpm-line">${fmt(tt.speed,{n:L.wpm})}</p>`}else ms.textContent='';
+    L.correct++;$('#ctrl').hidden=true;ask();
+   }
+  };
+  function ask(){const qa=$('#qa');
+   qa.innerHTML=`<h3 class="q">${esc(tt.question)}: ${esc(s.q)}</h3><div class="row">${shuffle(s.opts.map((o,i)=>({o,i}))).map(x=>`<button class="opt" data-i="${x.i}">${esc(x.o)}</button>`).join('')}</div>`;
+   speak(s.q);
+   $$('.opt',qa).forEach(btn=>btn.onclick=()=>{if(r.done||btn.classList.contains('no'))return;
+    if(btn.dataset.i==='0'){r.done=true;btn.classList.add('ok');L.correct++;praise(btn);advance(1600)}else{btn.classList.add('no');L.miss++}});
+  }
+ },
+ race(r,b,tt){
+  const p=P(),best=Math.max(0,...p.wpm.map(x=>x.v));
+  b.innerHTML=`<div class="prompt"><h2>${esc(tt.race)}</h2></div><p class="lead center">${esc(tt.raceLead)}</p>
+  <div class="race-bar"><span class="timer" id="tm">0.0</span><span>${esc(tt.record)}: <b>${best||'—'}</b> ${esc(tt.wpm)}</span></div>
+  <ol class="race wait" id="rc">${r.items.map(w=>`<li><span class="w">${esc(w.w)}</span></li>`).join('')}</ol>
+  <div class="row"><button class="btn" id="go">${I.play} ${esc(tt.start)}</button></div><div class="mic-status" id="ms" aria-live="polite"></div>`;
+  const spans=$$('#rc .w'),ms=$('#ms');let t0=0,iv;
+  $('#go').onclick=()=>{
+   if(!t0){t0=Date.now();$('#rc').classList.remove('wait');$('#go').innerHTML=`${I.check} ${esc(tt.finish)}`;$('#go').classList.add('teal');
+    iv=setInterval(()=>{$('#tm').textContent=((Date.now()-t0)/1000).toFixed(1)},100);intervals.push(iv);
+    if(micOK())stopFollow=follow(spans,pos=>{if(pos>=spans.length)$('#go').click()});
+   }else if(!r.done){
+    r.done=true;clearInterval(iv);if(stopFollow){stopFollow();stopFollow=null}
+    const sec=Math.max(1,(Date.now()-t0)/1000);spans.forEach(x=>x.classList.add('read'));
+    L.wpm=Math.min(150,Math.round(r.items.length/(sec/60)));L.correct+=r.items.length;r.items.forEach(addWord);
+    ms.innerHTML=`<p class="wpm-line">${fmt(tt.speed,{n:L.wpm})}${L.wpm>best&&best?` · ${esc(tt.newRecord)}`:''}</p>`;
+    $('#go').hidden=true;praise($('#rc'));advance(2600);
+   }
+  };
+ }
+};
+
+function finish(){
+ endTiming();
+ const p=P(),tt=t(),si=L.si;
+ const stars=L.miss===0?3:L.miss<=2?2:1;
+ const wasOpen=si<5&&unlocked(si+1),before=petStage(S.fed);
+ p.lessons[si]++;p.stars[si].push(stars);p.log.push({d:today(),s:si,st:stars});
+ if(L.wpm)p.wpm.push({d:today(),v:L.wpm});
+ S.fed+=L.correct;save();
+ const after=petStage(S.fed),opened=si<5&&!wasOpen&&unlocked(si+1);
+ $('#lprog').style.width='100%';
+ $('#lbody').innerHTML=`<div class="result">
+  <div class="bigstars">${[1,2,3].map(k=>I.star(k<=stars)).join('')}</div>
+  <h1>${esc(tt.resultTitle)}</h1>
+  <p>${fmt(tt.fed,{n:L.correct})}${L.wpm?' · '+fmt(tt.speed,{n:L.wpm}):''}</p>
+  <div class="pet ${after>before?'grow':''}">${petSVG(after)}</div>
+  <p><b>${esc(tt.pet.names[after])}</b></p>
+  ${opened?`<p class="unlock">${fmt(tt.opened,{n:esc(tt.stations[si+1].n)})}</p>`:''}
+  <div class="row"><button class="btn alt" id="again">${esc(tt.again)}</button><button class="btn" id="tomap">${esc(tt.back)}</button></div>
+ </div>`;
+ speak(tt.resultTitle);later(()=>burst($('.bigstars')),200);
+ $('#again').onclick=()=>startLesson(si);$('#tomap').onclick=()=>go('map');
+}
+
+/* ---------- story builder ---------- */
+const SB={hero:0,place:0,object:0,action:0};
+function tale(){const b=D().builder,g=k=>b[k][SB[k]%b[k].length].t,h=g('hero');
+ return b.tpl.replace('{place}',g('place')).replace('{hero}',h).replace('{object}',g('object')).replace('{action}',g('action')).replace('{Hero}',h.charAt(0).toUpperCase()+h.slice(1))}
+function renderStory(){
+ const tt=t(),b=D().builder,keys=['hero','place','object','action'];
+ const text=tale(),scene=keys.map(k=>b[k][SB[k]].e).join(' ');
+ $('#scr-story').innerHTML=`
+ <div class="map-head"><div><p class="eyebrow">${esc(tt.nav.story)}</p><h1>${esc(tt.story.title)}</h1><p class="lead">${esc(tt.story.lead)}</p></div></div>
+ <div class="sb">
+  <div class="groups">${keys.map(k=>`<div class="pick-group"><p class="eyebrow">${esc(tt.story[k])}</p><div class="choices">${b[k].map((c,i)=>`<button class="choice" data-k="${k}" data-i="${i}" aria-pressed="${SB[k]===i}"><span aria-hidden="true">${c.e}</span>${esc(c.t)}</button>`).join('')}</div></div>`).join('')}</div>
+  <article class="story-card"><p class="eyebrow">${esc(tt.story.yours)}</p><div class="scene" aria-hidden="true">${scene}</div>
+   <p class="story" id="tale">${text.split(' ').map(w=>`<span class="w">${esc(w)}</span>`).join(' ')}</p>
+   <div class="row"><button class="btn" id="tell">${I.speak} ${esc(tt.story.tell)}</button>${micOK()?`<button class="btn teal" id="self">${I.mic} ${esc(tt.story.readSelf)}</button>`:''}</div>
+  </article>
+ </div>`;
+ $$('.choice').forEach(c=>c.onclick=()=>{SB[c.dataset.k]=+c.dataset.i;stopAll();renderStory()});
+ const spans=$$('#tale .w');
+ $('#tell').onclick=()=>{if(stopFollow){stopFollow();stopFollow=null}speakHL(spans)};
+ const self=$('#self');
+ if(self)self.onclick=()=>{if(stopFollow){stopFollow();stopFollow=null;self.classList.remove('live');return}
+  try{synth&&synth.cancel()}catch(e){}spans.forEach(s=>s.classList.remove('read'));self.classList.add('live');
+  stopFollow=follow(spans,pos=>{if(pos>=spans.length){stopFollow&&stopFollow();stopFollow=null;self.classList.remove('live');S.fed+=3;save();praise($('#tale'))}})};
+}
+
+/* ---------- dictionary ---------- */
+function renderDict(){
+ const tt=t(),p=P(),words=D().words,known=words.filter(w=>p.words.includes(w.w)).length;
+ $('#scr-dict').innerHTML=`
+ <div class="map-head"><div><p class="eyebrow">${esc(tt.nav.dict)}</p><h1>${esc(tt.dict.title)}</h1><p class="lead">${esc(tt.dict.lead)}</p></div><span class="count-pill">${fmt(tt.dict.count,{n:known,m:words.length})}</span></div>
+ <div class="dict">${words.map(w=>p.words.includes(w.w)?`<button class="wcard" data-say="${esc(w.w)}"><span class="e" aria-hidden="true">${w.e}</span><b>${esc(w.w)}</b></button>`:`<div class="wcard no"><span class="e" aria-hidden="true">${w.e}</span><b>${'•'.repeat(Math.min(w.w.length,6))}</b></div>`).join('')}</div>`;
+ $$('[data-say]').forEach(c=>c.onclick=()=>{speak(c.dataset.say);burst(c)});
+}
+
+/* ---------- parents ---------- */
+function weekStart(d){const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()-((x.getDay()+6)%7));return x}
+function streak(log){const set=new Set(log.map(l=>l.d));const d=new Date();if(!set.has(dstr(d)))d.setDate(d.getDate()-1);let n=0;while(set.has(dstr(d))){n++;d.setDate(d.getDate()-1)}return n}
+function chartSVG(p,goal,tt){
+ const now=weekStart(new Date()),weeks=[];
+ for(let k=5;k>=0;k--){const s=new Date(now);s.setDate(s.getDate()-7*k);weeks.push(s)}
+ let vals=weeks.map((w,k)=>{const e=new Date(w);e.setDate(e.getDate()+7);const v=p.wpm.filter(x=>{const d=new Date(x.d+'T12:00');return d>=w&&d<e}).map(x=>x.v);return v.length?Math.round(v.reduce((a,b)=>a+b,0)/v.length):null});
+ const sample=vals.every(v=>v===null);
+ if(sample)vals=[Math.round(goal*.2),Math.round(goal*.3),Math.round(goal*.36),Math.round(goal*.48),Math.round(goal*.55),Math.round(goal*.66)];
+ const W=560,H=230,l=40,r=18,tp=18,bt=34,max=Math.ceil(Math.max(goal*1.15,...vals.filter(v=>v!==null))/10)*10;
+ const x=k=>l+k*(W-l-r)/5,y=v=>tp+(H-tp-bt)*(1-v/max);
+ const pts=vals.map((v,k)=>v===null?null:[x(k),y(v)]).filter(Boolean);
+ const grid=[0,max/2,max].map(v=>`<line class="c-grid" x1="${l}" x2="${W-r}" y1="${y(v)}" y2="${y(v)}"/><text class="c-txt" x="${l-8}" y="${y(v)+4}" text-anchor="end">${v}</text>`).join('');
+ const xl=weeks.map((w,k)=>`<text class="c-txt" x="${x(k)}" y="${H-12}" text-anchor="middle">${pad(w.getDate())}.${pad(w.getMonth()+1)}</text>`).join('');
+ const line=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+ const area=pts.length>1?`<path class="c-area" d="${line} L${pts[pts.length-1][0]},${y(0)} L${pts[0][0]},${y(0)}Z"/>`:'';
+ const last=pts[pts.length-1];
+ return `<div class="chart ${sample?'sample':''}"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(tt.par.speedT)}">${grid}
+  <line class="c-goal" x1="${l}" x2="${W-r}" y1="${y(goal)}" y2="${y(goal)}"/><text class="c-gtxt" x="${W-r}" y="${y(goal)-6}" text-anchor="end">${esc(tt.par.goalLbl)} ${goal}</text>
+  ${area}${pts.length?`<path class="c-line" d="${line}"/>`:''}${pts.map((p,i)=>`<circle class="c-dot" cx="${p[0]}" cy="${p[1]}" r="${p===last?6:4}"/>`).join('')}
+  ${last?`<text class="c-txt" x="${last[0]}" y="${last[1]-12}" text-anchor="middle" style="font-weight:700;fill:var(--ink)">${vals.filter(v=>v!==null).pop()}</text>`:''}
+  ${xl}</svg></div>${sample?`<p class="small">${esc(tt.par.sample)}</p>`:''}`;
+}
+function renderParents(){
+ const tt=t(),pt=tt.par,p=P(),goal=D().goal,best=Math.max(0,...p.wpm.map(x=>x.v));
+ const doy=Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0))/864e5);
+ $('#scr-parents').innerHTML=`
+ <div class="map-head"><div><p class="eyebrow">${esc(LANGS[S.lang].name)}</p><h1>${esc(pt.title)}</h1></div></div>
+ <div class="pgrid">
+  <section class="panel s8"><p class="eyebrow">${esc(pt.goal)}</p>
+   <p class="goal-num">${best} <span>/ ${goal} ${esc(tt.wpm)}</span></p>
+   <div class="meter"><i style="width:${Math.min(100,Math.round(best/goal*100))}%"></i></div>
+   <p class="small" style="margin-top:10px">${fmt(pt.goalText,{n:goal})}</p></section>
+  <section class="panel s4 tipbox"><p class="eyebrow">${esc(pt.tip)}</p><p>${esc(tt.tips[doy%tt.tips.length])}</p></section>
+  <section class="panel s12 kpis">
+   <div class="kpi"><b>${p.words.length}</b><span>${esc(pt.words)}</span></div>
+   <div class="kpi"><b>${p.log.length}</b><span>${esc(pt.lessons)}</span></div>
+   <div class="kpi"><b>${best||'—'}</b><span>${esc(pt.best)}, ${esc(tt.wpm)}</span></div>
+   <div class="kpi"><b>${streak(p.log)}</b><span>${esc(pt.streak)}</span></div>
+  </section>
+  <section class="panel s7"><h2>${esc(pt.speedT)}</h2>${chartSVG(p,goal,tt)}</section>
+  <section class="panel s5"><h2>${esc(pt.stages)}</h2><div style="margin-top:8px">${tt.stations.map((s,i)=>{const n=Math.min(p.lessons[i],LESSONS_PER);return `<div class="stage-row"><span>${i+1}. ${esc(s.n)}</span><div class="meter"><i style="width:${n/LESSONS_PER*100}%"></i></div><em>${n}/${LESSONS_PER}</em></div>`}).join('')}</div></section>
+  <section class="panel s12"><h2>${esc(pt.settings)}</h2>
+   <div class="form">
+    <label class="f" for="set-name">${esc(pt.name)}<input id="set-name" value="${esc(S.name)}" maxlength="24" placeholder="Айя"></label>
+    <label class="f" for="set-lang">${esc(pt.lang)}<select id="set-lang">${Object.entries(LANGS).map(([k,v])=>`<option value="${k}" ${k===S.lang?'selected':''}>${v.name}</option>`).join('')}</select></label>
+    <label class="f" for="set-sess">${esc(pt.session)}<select id="set-sess">${[10,15,20,30].map(m=>`<option value="${m}" ${m===S.session?'selected':''}>${m} ${esc(pt.min)}</option>`).join('')}</select></label>
+   </div>
+   <p class="small" style="margin-top:14px;max-width:80ch">${esc(pt.speech)}</p>
+   <div class="row" style="justify-content:flex-start"><button class="btn alt" id="set-reset">${esc(pt.reset)}</button></div>
+  </section>
+ </div>`;
+ $('#set-name').oninput=e=>{S.name=e.target.value.trim();save()};
+ $('#set-lang').onchange=e=>setLang(e.target.value);
+ $('#set-sess').onchange=e=>{S.session=+e.target.value;save()};
+ const rb=$('#set-reset');let armed=false;
+ rb.onclick=()=>{if(!armed){armed=true;rb.textContent=pt.sure;return}delete S.langs[S.lang];save();toast(pt.resetOk);renderParents()};
+}
+
+/* ---------- global events ---------- */
+document.addEventListener('click',e=>{
+ const pl=e.target.closest('[data-play]');if(pl){startLesson(+pl.dataset.play);return}
+ const n=e.target.closest('[data-go]');if(n){go(n.dataset.go);return}
+ const lg=e.target.closest('[data-lang]');if(lg)setLang(lg.dataset.lang);
+});
+document.addEventListener('keydown',e=>{const g=e.target.closest&&e.target.closest('g[data-play]');if(g&&(e.key==='Enter'||e.key===' ')){e.preventDefault();startLesson(+g.dataset.play)}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&screen==='lesson'&&L&&L.start){endTiming()}else if(!document.hidden&&screen==='lesson'&&L&&!L.start&&$('#overlay').hidden&&!$('.result')){L.start=Date.now();armLimit()}});
+
+const orn=`<svg xmlns="http://www.w3.org/2000/svg" width="44" height="14" viewBox="0 0 44 14"><path d="M22 13 V8 C22 2 14 1 12 5 C10 9 15 10 16 7 M22 8 C22 2 30 1 32 5 C34 9 29 10 28 7 M0 13 H44" fill="none" stroke="#127F86" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+$('.band').style.backgroundImage=`url("data:image/svg+xml,${encodeURIComponent(orn)}")`;
+
+renderChrome();go('map');
+})();
+</script>
+</body>
+</html>
