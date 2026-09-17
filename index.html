@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Наблюдательный совет ТОО «[Наименование]»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F4F8; --surface:#FFFFFF; --ink:#1B2433; --muted:#5E6B7E; --line:#DDE3EC;
+  --navy:#0A2D5A; --blue:#0B63B0; --blue-s:#E5EFF9; --gold:#E9B200;
+  --done:#1E8E54; --done-s:#E3F4EA; --prog:#0B63B0; --prog-s:#E5EFF9;
+  --soon:#B87900; --soon-s:#FCF1D6; --over:#C9372C; --over-s:#FBE4E2;
+  --off:#6B7584; --off-s:#ECEEF2;
+  --font:"Onest","Segoe UI",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1420; --surface:#152032; --ink:#E6ECF4; --muted:#A1AEC0; --line:#27354A;
+    --navy:#081E3D; --blue:#6AAAE8; --blue-s:#18304D; --gold:#F2C744;
+    --done:#5CC98D; --done-s:#153023; --prog:#6AAAE8; --prog-s:#18304D;
+    --soon:#E8B64A; --soon-s:#33290F; --over:#EE8177; --over-s:#3A1E1C; --off:#A1AEC0; --off-s:#223045;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1420; --surface:#152032; --ink:#E6ECF4; --muted:#A1AEC0; --line:#27354A;
+  --navy:#081E3D; --blue:#6AAAE8; --blue-s:#18304D; --gold:#F2C744;
+  --done:#5CC98D; --done-s:#153023; --prog:#6AAAE8; --prog-s:#18304D;
+  --soon:#E8B64A; --soon-s:#33290F; --over:#EE8177; --over-s:#3A1E1C; --off:#A1AEC0; --off-s:#223045;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:1rem;line-height:1.6}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:4px}
+h1,h2,h3{margin:0;line-height:1.25}
+p{margin:0 0 .8em}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+
+.demo{background:var(--gold);color:#1B2433;font-size:.88rem;font-weight:600;text-align:center;padding:6px 12px}
+
+header.site{background:var(--surface);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;gap:20px;min-height:76px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:12px;color:var(--ink)}
+.logo .mark{width:46px;height:46px;border-radius:10px;border:2px dashed var(--blue);display:grid;place-items:center;font-size:.62rem;color:var(--blue);text-align:center;line-height:1.1;font-weight:600}
+.logo b{display:block;font-size:1.02rem}
+.logo span{display:block;font-size:.82rem;color:var(--muted)}
+.hright{margin-left:auto;display:flex;align-items:center;gap:14px;font-size:.9rem}
+.langs{display:flex;gap:2px}
+.langs button{font:inherit;font-size:.85rem;border:0;background:transparent;color:var(--muted);padding:4px 8px;border-radius:6px;cursor:pointer}
+.langs button[aria-pressed="true"]{background:var(--blue-s);color:var(--blue);font-weight:600}
+.langs button:disabled{cursor:not-allowed;opacity:.55}
+.tbtn{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:5px 10px;border-radius:8px;cursor:pointer}
+
+nav.main{background:var(--navy)}
+nav.main .wrap{display:flex;gap:4px;overflow-x:auto;white-space:nowrap}
+nav.main a{color:#D3DFEE;padding:13px 14px;font-size:.93rem;font-weight:500;border-bottom:3px solid transparent}
+nav.main a:hover{color:#fff;text-decoration:none}
+nav.main a.on{color:#fff;border-bottom-color:var(--gold)}
+
+.banner{background:linear-gradient(90deg,var(--navy),#0B4C8F);color:#fff;padding:36px 0 40px}
+.crumbs{font-size:.86rem;color:#B9CCE3;margin-bottom:10px}
+.crumbs a{color:#DDE8F5}
+.banner h1{font-size:clamp(1.6rem,3.4vw,2.3rem);font-weight:700}
+
+.layout{display:grid;grid-template-columns:260px 1fr;gap:28px;padding:28px 0 60px}
+aside.side{align-self:start;position:sticky;top:12px}
+aside.side nav{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+aside.side h2{font-size:.82rem;color:var(--muted);font-weight:600;padding:14px 18px 8px}
+aside.side a{display:block;padding:11px 18px;color:var(--ink);border-left:4px solid transparent;font-size:.95rem;border-top:1px solid var(--line)}
+aside.side a:hover{background:var(--bg);text-decoration:none}
+aside.side a.on{border-left-color:var(--blue);background:var(--blue-s);color:var(--blue);font-weight:600}
+@media (max-width:900px){.layout{grid-template-columns:1fr}aside.side{position:static}}
+
+main .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px}
+main h2{font-size:1.35rem;margin-bottom:14px}
+main h3{font-size:1.05rem;margin-bottom:8px}
+.muted{color:var(--muted)}
+.ph{background:var(--blue-s);color:var(--blue);border-radius:4px;padding:0 4px}
+
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;border-top:4px solid var(--c);cursor:pointer;text-align:left;font:inherit;color:inherit}
+.kpi:hover{box-shadow:0 4px 14px rgba(10,45,90,.1)}
+.kpi b{display:block;font-size:1.9rem;color:var(--c);line-height:1.1}
+.kpi span{font-size:.88rem;color:var(--muted)}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+
+.stack{display:flex;height:16px;border-radius:8px;overflow:hidden;background:var(--off-s);margin:10px 0 8px}
+.stack i{display:block;height:100%}
+.leg{display:flex;flex-wrap:wrap;gap:14px;font-size:.88rem;color:var(--muted)}
+.leg span{display:inline-flex;align-items:center;gap:6px}
+.leg em{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+.badge{display:inline-block;font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.st-done{background:var(--done-s);color:var(--done)} .st-prog{background:var(--prog-s);color:var(--prog)}
+.st-soon{background:var(--soon-s);color:var(--soon)} .st-over{background:var(--over-s);color:var(--over)}
+.st-off{background:var(--off-s);color:var(--off)}
+
+.filters{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:10px;margin-bottom:16px}
+.filters label{font-size:.8rem;color:var(--muted);display:block;margin-bottom:4px}
+.filters input,.filters select{width:100%;font:inherit;font-size:.93rem;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+@media (max-width:900px){.filters{grid-template-columns:1fr 1fr}}
+.tools{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;font-size:.9rem}
+.btn{font:inherit;font-size:.9rem;padding:8px 14px;border-radius:8px;border:1px solid var(--blue);background:var(--surface);color:var(--blue);cursor:pointer}
+.btn.pri{background:var(--blue);color:#fff}
+
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:820px;font-size:.93rem;background:var(--surface)}
+th{background:var(--bg);text-align:left;padding:11px 14px;font-size:.84rem;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line)}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr{cursor:pointer}
+tbody tr:hover td{background:var(--blue-s)}
+tbody tr:last-child td{border-bottom:0}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
+.field span{display:block;font-size:.82rem;color:var(--muted)}
+.field b{font-weight:600}
+@media (max-width:700px){.grid2{grid-template-columns:1fr}}
+.dhead{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:flex-start;margin-bottom:16px}
+.quote{border-left:4px solid var(--blue);background:var(--bg);padding:14px 18px;border-radius:0 8px 8px 0}
+
+.timeline{list-style:none;margin:0;padding:0}
+.timeline li{position:relative;padding:0 0 22px 30px}
+.timeline li::before{content:"";position:absolute;left:7px;top:8px;bottom:-4px;width:2px;background:var(--line)}
+.timeline li:last-child::before{display:none}
+.timeline li::after{content:"";position:absolute;left:0;top:4px;width:16px;height:16px;border-radius:50%;background:var(--surface);border:3px solid var(--blue)}
+.timeline .when{font-size:.85rem;color:var(--muted)}
+.file{display:inline-flex;align-items:center;gap:6px;font-size:.88rem;margin-top:6px;padding:4px 10px;border:1px solid var(--line);border-radius:6px;color:var(--ink)}
+
+.members{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.member{border:1px solid var(--line);border-radius:12px;padding:18px;background:var(--surface)}
+.avatar{width:64px;height:64px;border-radius:50%;background:var(--blue-s);color:var(--blue);display:grid;place-items:center;font-weight:700;font-size:1.2rem;margin-bottom:12px}
+.member b{display:block}
+.member span{font-size:.9rem;color:var(--muted)}
+
+.doclist{list-style:none;margin:0;padding:0}
+.doclist li{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--line)}
+.doclist li:first-child{border-top:0}
+.ext{font-size:.75rem;font-weight:700;background:var(--over-s);color:var(--over);padding:3px 7px;border-radius:5px;margin-right:10px}
+
+footer{background:var(--navy);color:#B9CCE3;padding:28px 0;font-size:.88rem}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+aside.side h2.g2{border-top:1px solid var(--line);margin-top:0;padding-top:16px}
+.yrs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px}
+.yrs a{padding:8px 16px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-weight:600;font-size:.93rem}
+.yrs a:hover{text-decoration:none;border-color:var(--blue)}
+.yrs a.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.yrs a .dotx{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-left:6px;vertical-align:middle}
+.notice{border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:.95rem;border-left:4px solid var(--c);background:var(--cs)}
+.notice b{color:var(--c)}
+.nb-blue{--c:var(--blue);--cs:var(--blue-s)} .nb-green{--c:var(--done);--cs:var(--done-s)} .nb-gold{--c:var(--soon);--cs:var(--soon-s)} .nb-red{--c:var(--over);--cs:var(--over-s)}
+.qblock{border:1px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden}
+.qblock > h3{background:var(--blue-s);color:var(--blue);padding:12px 18px;margin:0;font-size:1rem}
+.qrow{padding:14px 18px;border-top:1px solid var(--line)}
+.qrow:first-of-type{border-top:0}
+.qrow fieldset{border:0;margin:0;padding:0}
+.qrow legend{padding:0;margin-bottom:10px;font-size:.97rem}
+.scale{display:flex;flex-wrap:wrap;gap:6px}
+.scale label{position:relative}
+.scale input{position:absolute;opacity:0;width:1px;height:1px}
+.scale span{display:inline-block;min-width:44px;text-align:center;padding:7px 12px;border:1px solid var(--line);border-radius:8px;font-weight:600;font-size:.92rem;cursor:pointer;background:var(--surface)}
+.scale input:checked + span{background:var(--blue);border-color:var(--blue);color:#fff}
+.scale input:focus-visible + span{outline:3px solid var(--gold);outline-offset:2px}
+.scale input:disabled + span{cursor:default;opacity:.75}
+.scale .na span{font-weight:500;color:var(--muted)}
+.scale-hint{font-size:.8rem;color:var(--muted);margin-top:6px}
+textarea.ta{width:100%;min-height:80px;font:inherit;font-size:.95rem;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);resize:vertical}
+.formbar{position:sticky;bottom:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;box-shadow:0 -4px 16px rgba(10,45,90,.08)}
+.prog{flex:1;min-width:180px}
+.prog .track{height:8px;border-radius:4px;background:var(--off-s);overflow:hidden;margin-top:4px}
+.prog .fill{height:100%;background:var(--done)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.bars{display:grid;gap:12px}
+.bar-row{display:grid;grid-template-columns:minmax(160px,1.3fr) 2fr 70px;gap:12px;align-items:center;font-size:.94rem}
+.bar-row .tr{height:14px;background:var(--off-s);border-radius:7px;overflow:hidden}
+.bar-row .fl{height:100%;border-radius:7px;background:var(--blue)}
+.bar-row b{text-align:right}
+.delta{font-size:.8rem;font-weight:600;margin-left:4px}
+.delta.up{color:var(--done)} .delta.down{color:var(--over)}
+@media (max-width:640px){.bar-row{grid-template-columns:1fr 60px}.bar-row .tr{grid-column:1/-1;order:3}}
+.heat td.v{text-align:center;font-weight:600}
+.comment{border-left:3px solid var(--line);padding:6px 12px;margin:8px 0;font-size:.94rem}
+.rep-sec{margin-top:18px}
+.rep-sec ul{margin:6px 0 0;padding-left:1.2em}
+.rep-sec li{margin-bottom:.35em}
+
+main#view:focus{outline:none}
+@media print{nav.main,aside.side,header.site,.demo,footer,.tools .btn,.noprint{display:none!important}.layout{grid-template-columns:1fr}.banner{background:none;color:#000;padding:0}.crumbs{display:none}}
+</style>
+</head>
+<body>
+
+<div class="demo">Шаблон сайта. Данные в квадратных скобках подлежат замене.</div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="#/about">
+      <span class="mark">ЛОГО</span>
+      <span><b id="coName">ТОО «[Наименование Товарищества]»</b><span>Группа компаний АО НК «КазМунайГаз»</span></span>
+    </a>
+    <div class="hright">
+      <div class="langs" role="group" aria-label="Язык">
+        <button type="button" aria-pressed="false" disabled title="Версия на казахском языке готовится">Қаз</button>
+        <button type="button" aria-pressed="true">Рус</button>
+        <button type="button" aria-pressed="false" disabled title="Версия на английском языке готовится">Eng</button>
+      </div>
+      <button class="tbtn" id="themeBtn" type="button">Тёмная тема</button>
+    </div>
+  </div>
+</header>
+
+<nav class="main" aria-label="Основное меню">
+  <div class="wrap">
+    <a href="#/about" data-top>О Товариществе</a>
+    <a href="#/about" data-top class="on">Корпоративное управление</a>
+    <a href="#/eval-form" data-top>Оценка деятельности НС</a>
+    <a href="#/documents" data-top>Документы</a>
+    <a href="#/secretary" data-top>Контакты</a>
+  </div>
+</nav>
+
+<div class="banner">
+  <div class="wrap">
+    <div class="crumbs" id="crumbs"></div>
+    <h1 id="pageTitle">Наблюдательный совет</h1>
+  </div>
+</div>
+
+<div class="wrap layout">
+  <aside class="side">
+    <nav aria-label="Разделы корпоративного управления">
+      <h2>Корпоративное управление</h2>
+      <a href="#/about" data-r="about">О Наблюдательном совете</a>
+      <a href="#/members" data-r="members">Состав</a>
+      <a href="#/meetings" data-r="meetings">Заседания</a>
+      <a href="#/decisions" data-r="decisions">Реестр решений</a>
+      <a href="#/reports" data-r="reports">Отчёты об исполнении</a>
+      <a href="#/documents" data-r="documents">Внутренние документы</a>
+      <a href="#/secretary" data-r="secretary">Корпоративный секретарь</a>
+      <h2 class="g2">Оценка деятельности Наблюдательного совета</h2>
+      <a href="#/eval-form" data-r="eval-form">Анкета для самооценки</a>
+      <a href="#/eval-stats" data-r="eval-stats">Статистические данные</a>
+      <a href="#/eval-report" data-r="eval-report">Отчёт о результатах оценки</a>
+    </nav>
+  </aside>
+  <main id="view" tabindex="-1"></main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr"></span> ТОО «[Наименование Товарищества]»</span>
+    <span>Сведения обновлены: <span id="updated"></span></span>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   ДАННЫЕ ШАБЛОНА. Заменяйте только этот блок.
+   Статусы: "done" исполнено, "prog" на исполнении, "off" снято с контроля.
+   Статусы «срок истекает» и «просрочено» рассчитываются автоматически по дате.
+   ===================================================================== */
+var DATA = {
+  company: "ТОО «[Наименование Товарищества]»",
+  updated: "2026-09-15",
+  about: {
+    text: "Наблюдательный совет является органом Товарищества, осуществляющим контроль за деятельностью исполнительного органа в пределах компетенции, установленной Уставом и Положением о Наблюдательном совете. [Замените текст на формулировку из Устава.]",
+    composition: "[N] членов, в том числе [N] независимых",
+    chair: "[Фамилия И. О.]"
+  },
+  members: [
+    {name:"[Фамилия Имя Отчество]", role:"Председатель Наблюдательного совета", job:"[Должность, АО НК «КазМунайГаз»]", since:"[дата избрания]"},
+    {name:"[Фамилия Имя Отчество]", role:"Член Наблюдательного совета", job:"[Должность, АО НК «КазМунайГаз»]", since:"[дата избрания]"},
+    {name:"[Фамилия Имя Отчество]", role:"Член Наблюдательного совета", job:"[Должность, АО НК «КазМунайГаз»]", since:"[дата избрания]"},
+    {name:"[Фамилия Имя Отчество]", role:"Независимый член", job:"[Место работы]", since:"[дата избрания]"}
+  ],
+  meetings: [
+    {id:"m1", no:"1/2026", date:"2026-02-20", form:"Очное"},
+    {id:"m2", no:"2/2026", date:"2026-04-28", form:"Заочное"},
+    {id:"m3", no:"3/2026", date:"2026-06-25", form:"Очное"},
+    {id:"m0", no:"5/2025", date:"2025-12-18", form:"Очное"}
+  ],
+  decisions: [
+    {id:"d1", meeting:"m0", q:"1", title:"Об утверждении плана работы Наблюдательного совета на 2026 год",
+     decision:"Утвердить план работы Наблюдательного совета на 2026 год.",
+     task:"Корпоративному секретарю обеспечить размещение плана и ежеквартально информировать о его выполнении.",
+     owner:"Корпоративный секретарь", deadline:"2026-01-15", status:"done",
+     reports:[{date:"2026-01-12", author:"Корпоративный секретарь", text:"План размещён, члены Наблюдательного совета ознакомлены.", file:"Отчёт_исполнение_1.pdf"}]},
+    {id:"d2", meeting:"m1", q:"2", title:"О рассмотрении отчёта о деятельности службы внутреннего аудита за 2025 год",
+     decision:"Принять к сведению отчёт службы внутреннего аудита за 2025 год.",
+     task:"Директору Товарищества устранить замечания аудита согласно плану корректирующих мероприятий.",
+     owner:"Директор", deadline:"2026-06-30", status:"done",
+     reports:[{date:"2026-04-10", author:"Заместитель директора по экономике", text:"Устранено 7 из 10 замечаний.", file:""},
+              {date:"2026-06-26", author:"Директор", text:"Все замечания устранены, подтверждено службой внутреннего аудита.", file:"Письмо_СВА.pdf"}]},
+    {id:"d3", meeting:"m1", q:"3", title:"Об утверждении карты рисков на 2026 год",
+     decision:"Утвердить карту рисков и план мероприятий по управлению ключевыми рисками на 2026 год.",
+     task:"Ответственному за управление рисками представить отчёт о реализации мероприятий по итогам полугодия.",
+     owner:"Менеджер по управлению рисками", deadline:"2026-08-31", status:"prog",
+     reports:[{date:"2026-07-20", author:"Менеджер по управлению рисками", text:"Проект отчёта направлен на согласование.", file:""}]},
+    {id:"d4", meeting:"m2", q:"1", title:"О предварительном утверждении годовой финансовой отчётности за 2025 год",
+     decision:"Предварительно утвердить годовую финансовую отчётность и вынести на утверждение Общего собрания участников.",
+     task:"Корпоративному секретарю направить материалы участнику.",
+     owner:"Корпоративный секретарь", deadline:"2026-05-10", status:"done",
+     reports:[{date:"2026-05-06", author:"Корпоративный секретарь", text:"Материалы направлены, исх. № [___].", file:""}]},
+    {id:"d5", meeting:"m2", q:"2", title:"Об утверждении ключевых показателей деятельности руководителей на 2026 год",
+     decision:"Утвердить карты КПД руководящих работников на 2026 год.",
+     task:"Службе персонала представить промежуточный мониторинг достижения КПД.",
+     owner:"Руководитель службы персонала", deadline:"2026-09-30", status:"prog",
+     reports:[]},
+    {id:"d6", meeting:"m3", q:"1", title:"О результатах оценки деятельности Наблюдательного совета за 2025 год",
+     decision:"Принять к сведению результаты оценки. Утвердить план мероприятий по итогам оценки.",
+     task:"Корпоративному секретарю организовать реализацию плана мероприятий.",
+     owner:"Корпоративный секретарь", deadline:"2026-12-15", status:"prog",
+     reports:[{date:"2026-09-01", author:"Корпоративный секретарь", text:"Выполнено 2 из 5 мероприятий плана.", file:""}]},
+    {id:"d7", meeting:"m3", q:"2", title:"О заключении сделки, в совершении которой имеется заинтересованность",
+     decision:"[Текст решения]",
+     task:"[Текст поручения]",
+     owner:"Директор", deadline:"2026-11-30", status:"prog",
+     reports:[]},
+    {id:"d8", meeting:"m3", q:"3", title:"Об актуализации Положения о закупках",
+     decision:"Снять вопрос с контроля в связи с утверждением новой редакции Положения Единственным участником.",
+     task:"—",
+     owner:"Руководитель службы закупок", deadline:"2026-07-31", status:"off",
+     reports:[]}
+  ],
+  quarterly: [
+    {period:"II квартал 2026 года", date:"2026-07-15", file:"Отчёт_исполнение_II_кв_2026.pdf"},
+    {period:"I квартал 2026 года", date:"2026-04-15", file:"Отчёт_исполнение_I_кв_2026.pdf"},
+    {period:"IV квартал 2025 года", date:"2026-01-20", file:"Отчёт_исполнение_IV_кв_2025.pdf"}
+  ],
+  documents: [
+    {title:"Устав Товарищества", date:"[дата]", ext:"PDF"},
+    {title:"Положение о Наблюдательном совете", date:"[дата]", ext:"PDF"},
+    {title:"Кодекс корпоративного управления", date:"[дата]", ext:"PDF"},
+    {title:"Положение о корпоративном секретаре", date:"[дата]", ext:"PDF"},
+    {title:"План работы Наблюдательного совета на 2026 год", date:"[дата]", ext:"PDF"}
+  ],
+  /* ---------- ОЦЕНКА ДЕЯТЕЛЬНОСТИ НАБЛЮДАТЕЛЬНОГО СОВЕТА ----------
+     years: годы, за которые проводится оценка.
+     openYear: год, анкета за который заполняется онлайн сейчас.
+     formUrl: запасная ссылка на Microsoft Forms (необязательно). */
+  evaluation: {
+    years: [2021, 2022, 2023, 2024, 2025],
+    openYear: 2025,
+    deadline: "2026-10-15",
+    formUrl: "",
+    scale: ["Полностью не согласен", "Скорее не согласен", "Нейтрально", "Скорее согласен", "Полностью согласен"],
+    blocks: [
+      {id:"A", title:"Состав и компетенции", questions:[
+        {id:"A1", text:"Состав Наблюдательного совета обеспечивает необходимый баланс знаний, опыта и компетенций."},
+        {id:"A2", text:"Члены Наблюдательного совета имеют достаточно времени для исполнения своих обязанностей."},
+        {id:"A3", text:"Новым членам Наблюдательного совета обеспечивается вводный курс о деятельности Товарищества."},
+        {id:"A4", text:"Председатель эффективно руководит работой Наблюдательного совета."}]},
+      {id:"B", title:"Организация заседаний и качество материалов", questions:[
+        {id:"B1", text:"План работы Наблюдательного совета охватывает ключевые вопросы деятельности Товарищества."},
+        {id:"B2", text:"Материалы к заседаниям направляются своевременно."},
+        {id:"B3", text:"Материалы содержат достаточную информацию для принятия решений."},
+        {id:"B4", text:"На заседаниях обеспечивается открытое обсуждение и учитываются мнения всех членов."}]},
+      {id:"C", title:"Стратегия и контроль", questions:[
+        {id:"C1", text:"Наблюдательный совет уделяет достаточно внимания стратегическим вопросам."},
+        {id:"C2", text:"Наблюдательный совет эффективно контролирует исполнение ключевых показателей деятельности."},
+        {id:"C3", text:"Контроль исполнения решений Наблюдательного совета организован эффективно."}]},
+      {id:"D", title:"Управление рисками и внутренний контроль", questions:[
+        {id:"D1", text:"Наблюдательный совет регулярно рассматривает ключевые риски Товарищества."},
+        {id:"D2", text:"Наблюдательный совет получает достаточную информацию от службы внутреннего аудита."},
+        {id:"D3", text:"Вопросы конфликта интересов и сделок с заинтересованностью рассматриваются надлежащим образом."}]},
+      {id:"E", title:"Взаимодействие с исполнительным органом и участником", questions:[
+        {id:"E1", text:"Взаимодействие с исполнительным органом конструктивное и открытое."},
+        {id:"E2", text:"Исполнительный орган своевременно информирует Наблюдательный совет о существенных событиях."},
+        {id:"E3", text:"Позиция участника доводится до Наблюдательного совета своевременно и понятно."}]},
+      {id:"F", title:"Корпоративный секретарь", questions:[
+        {id:"F1", text:"Корпоративный секретарь обеспечивает качественную подготовку и проведение заседаний."},
+        {id:"F2", text:"Корпоративный секретарь своевременно информирует о статусе исполнения решений."},
+        {id:"F3", text:"Протоколы заседаний оформляются качественно и в установленные сроки."}]}
+    ],
+    finalQuestions: [
+      {id:"S", text:"Какие сильные стороны работы Наблюдательного совета вы бы отметили?"},
+      {id:"P", text:"Какие изменения повысили бы эффективность Наблюдательного совета?"}
+    ],
+    /* Отчёты: заполните поля, когда отчёт за год будет рассмотрен. */
+    reports: {}
+  },
+  secretary: {name:"[Фамилия Имя Отчество]", role:"Корпоративный секретарь", phone:"+7 (___) ___-__-__", email:"[адрес]@[домен].kz", address:"[Адрес]"}
+};
+/* ===================================================================== */
+
+(function(){
+var STATUS = {
+  done:{t:"Исполнено", c:"st-done", v:"--done"},
+  prog:{t:"На исполнении", c:"st-prog", v:"--prog"},
+  soon:{t:"Срок истекает", c:"st-soon", v:"--soon"},
+  over:{t:"Просрочено", c:"st-over", v:"--over"},
+  off:{t:"Снято с контроля", c:"st-off", v:"--off"}
+};
+var today = new Date(); today.setHours(0,0,0,0);
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];});}
+function d(s){var p=String(s).split("-"); if(p.length!==3) return null; return new Date(+p[0],+p[1]-1,+p[2]);}
+function fmt(s){var x=d(s); if(!x) return esc(s); return ("0"+x.getDate()).slice(-2)+"."+("0"+(x.getMonth()+1)).slice(-2)+"."+x.getFullYear();}
+function eff(r){
+  if(r.status==="done"||r.status==="off") return r.status;
+  var dl=d(r.deadline); if(!dl) return "prog";
+  var diff=(dl-today)/86400000;
+  if(diff<0) return "over"; if(diff<=14) return "soon"; return "prog";
+}
+function meeting(id){return DATA.meetings.filter(function(m){return m.id===id;})[0]||{};}
+function badge(k){return '<span class="badge '+STATUS[k].c+'">'+STATUS[k].t+'</span>';}
+function initials(n){var w=String(n).replace(/[\[\]]/g,"").trim().split(/\s+/); return ((w[0]||"")[0]||"?")+((w[1]||"")[0]||"");}
+
+document.getElementById("coName").textContent = DATA.company;
+document.getElementById("yr").textContent = today.getFullYear();
+document.getElementById("updated").textContent = fmt(DATA.updated);
+
+var view=document.getElementById("view"), crumbs=document.getElementById("crumbs"), title=document.getElementById("pageTitle");
+var filt={q:"",year:"",status:"",owner:"",meeting:""};
+
+function setHead(t, trail){
+  title.textContent=t;
+  var h='<a href="#/about">Главная</a> / <a href="#/about">Корпоративное управление</a> / <a href="#/about">Наблюдательный совет</a>';
+  (trail||[]).forEach(function(x){h+=' / '+(x.href?'<a href="'+x.href+'">'+esc(x.t)+'</a>':esc(x.t));});
+  crumbs.innerHTML=h;
+  document.title=t+" — Наблюдательный совет";
+}
+function counts(){
+  var c={done:0,prog:0,soon:0,over:0,off:0};
+  DATA.decisions.forEach(function(r){c[eff(r)]++;}); return c;
+}
+
+var R = {};
+R.about=function(){
+  setHead("Наблюдательный совет");
+  var c=counts(), total=DATA.decisions.length;
+  var ctl=total-c.off;
+  var bar=["done","prog","soon","over","off"].map(function(k){return c[k]?'<i style="width:'+(c[k]/total*100)+'%;background:var('+STATUS[k].v+')" title="'+STATUS[k].t+': '+c[k]+'"></i>':"";}).join("");
+  view.innerHTML=
+   '<div class="kpis">'+
+     kpi(total,"Всего решений на контроле и исполненных","--blue","")+
+     kpi(c.done,"Исполнено","--done","done")+
+     kpi(c.prog,"На исполнении","--prog","prog")+
+     kpi(c.soon,"Срок истекает в течение 14 дней","--soon","soon")+
+     kpi(c.over,"Просрочено","--over","over")+
+   '</div>'+
+   '<div class="card"><h2>Статус исполнения решений</h2>'+
+     '<div class="stack" aria-hidden="true">'+bar+'</div>'+
+     '<div class="leg">'+["done","prog","soon","over","off"].map(function(k){return '<span><em style="background:var('+STATUS[k].v+')"></em>'+STATUS[k].t+': '+c[k]+'</span>';}).join("")+'</div>'+
+     '<p class="muted" style="margin-top:12px">Доля исполненных из поставленных на контроль: <b>'+(ctl?Math.round(c.done/ctl*100):0)+'%</b>. <a href="#/decisions">Открыть реестр решений</a></p>'+
+   '</div>'+
+   '<div class="card"><h2>О Наблюдательном совете</h2><p>'+esc(DATA.about.text)+'</p>'+
+     '<div class="grid2" style="margin-top:14px"><div class="field"><span>Председатель</span><b>'+esc(DATA.about.chair)+'</b></div><div class="field"><span>Количественный состав</span><b>'+esc(DATA.about.composition)+'</b></div></div></div>'+
+   '<div class="card"><h2>Последние заседания</h2>'+meetingTable(DATA.meetings.slice().sort(byDateDesc).slice(0,3))+'</div>';
+  view.querySelectorAll(".kpi").forEach(function(b){b.addEventListener("click",function(){filt={q:"",year:"",status:b.dataset.s,owner:"",meeting:""};location.hash="#/decisions";});});
+};
+function kpi(n,t,v,s){return '<button type="button" class="kpi" data-s="'+s+'" style="--c:var('+v+')"><b>'+n+'</b><span>'+t+'</span></button>';}
+function byDateDesc(a,b){return (d(b.date)||0)-(d(a.date)||0);}
+
+function meetingTable(list){
+  var rows=list.map(function(m){
+    var n=DATA.decisions.filter(function(x){return x.meeting===m.id;}).length;
+    return '<tr data-m="'+esc(m.id)+'"><td>'+fmt(m.date)+'</td><td>№ '+esc(m.no)+'</td><td>'+esc(m.form)+'</td><td>'+n+'</td><td><a href="#/decisions" data-m="'+esc(m.id)+'">Решения</a></td></tr>';
+  }).join("");
+  return '<div class="scroll"><table style="min-width:560px"><thead><tr><th>Дата</th><th>Протокол</th><th>Форма</th><th>Вопросов</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+function wireMeetingRows(){
+  view.querySelectorAll("tr[data-m]").forEach(function(tr){
+    tr.addEventListener("click",function(e){e.preventDefault();filt={q:"",year:"",status:"",owner:"",meeting:tr.dataset.m};location.hash="#/decisions";});
+  });
+}
+
+R.members=function(){
+  setHead("Состав Наблюдательного совета",[{t:"Состав"}]);
+  view.innerHTML='<div class="card"><h2>Состав Наблюдательного совета</h2><div class="members">'+DATA.members.map(function(m){
+    return '<div class="member"><div class="avatar" aria-hidden="true">'+esc(initials(m.name))+'</div><b>'+esc(m.name)+'</b><span>'+esc(m.role)+'</span><p class="muted" style="font-size:.88rem;margin:8px 0 0">'+esc(m.job)+'<br>Избран(а): '+esc(m.since)+'</p></div>';
+  }).join("")+'</div></div>';
+};
+
+R.meetings=function(){
+  setHead("Заседания",[{t:"Заседания"}]);
+  view.innerHTML='<div class="card"><h2>Заседания Наблюдательного совета</h2><p class="muted">Нажмите на строку, чтобы открыть решения, принятые на заседании.</p>'+meetingTable(DATA.meetings.slice().sort(byDateDesc))+'</div>';
+  wireMeetingRows();
+};
+var _about=R.about; R.about=function(){_about(); wireMeetingRows();};
+
+R.decisions=function(){
+  setHead("Реестр решений",[{t:"Реестр решений"}]);
+  var years=[], owners=[];
+  DATA.meetings.forEach(function(m){var y=(m.date||"").slice(0,4); if(y&&years.indexOf(y)<0) years.push(y);});
+  DATA.decisions.forEach(function(r){if(owners.indexOf(r.owner)<0) owners.push(r.owner);});
+  years.sort().reverse(); owners.sort();
+  function opts(arr,sel,lab){return '<option value="">'+lab+'</option>'+arr.map(function(a){var v=a.v!=null?a.v:a,t=a.t!=null?a.t:a;return '<option value="'+esc(v)+'"'+(v===sel?" selected":"")+'>'+esc(t)+'</option>';}).join("");}
+  view.innerHTML='<div class="card"><h2>Реестр решений Наблюдательного совета</h2>'+
+   '<div class="filters">'+
+    '<div><label for="fq">Поиск</label><input id="fq" type="search" placeholder="Название, текст решения, ответственный" value="'+esc(filt.q)+'"></div>'+
+    '<div><label for="fy">Год</label><select id="fy">'+opts(years,filt.year,"Все годы")+'</select></div>'+
+    '<div><label for="fs">Статус</label><select id="fs">'+opts(Object.keys(STATUS).map(function(k){return {v:k,t:STATUS[k].t};}),filt.status,"Все статусы")+'</select></div>'+
+    '<div><label for="fo">Ответственный</label><select id="fo">'+opts(owners,filt.owner,"Все")+'</select></div>'+
+    '<div><label for="fm">Заседание</label><select id="fm">'+opts(DATA.meetings.slice().sort(byDateDesc).map(function(m){return {v:m.id,t:"№ "+m.no+" от "+fmt(m.date)};}),filt.meeting,"Все")+'</select></div>'+
+   '</div>'+
+   '<div class="tools"><span class="muted" id="cnt"></span><span><button class="btn" id="reset" type="button">Сбросить фильтры</button> <button class="btn" id="csv" type="button">Выгрузить CSV</button> <button class="btn pri" id="print" type="button">Печать</button></span></div>'+
+   '<div class="scroll"><table><thead><tr><th>Протокол, вопрос</th><th>Решение</th><th>Ответственный</th><th>Срок</th><th>Статус</th><th>Отчётов</th></tr></thead><tbody id="tb"></tbody></table></div></div>';
+  var tb=document.getElementById("tb");
+  function list(){
+    return DATA.decisions.filter(function(r){
+      var m=meeting(r.meeting), k=eff(r);
+      if(filt.year&&(m.date||"").slice(0,4)!==filt.year) return false;
+      if(filt.status&&k!==filt.status) return false;
+      if(filt.owner&&r.owner!==filt.owner) return false;
+      if(filt.meeting&&r.meeting!==filt.meeting) return false;
+      if(filt.q){var s=(r.title+" "+r.decision+" "+r.task+" "+r.owner).toLowerCase(); if(s.indexOf(filt.q.toLowerCase())<0) return false;}
+      return true;
+    }).sort(function(a,b){return (d(meeting(b.meeting).date)||0)-(d(meeting(a.meeting).date)||0)||(+a.q)-(+b.q);});
+  }
+  function draw(){
+    var L=list();
+    document.getElementById("cnt").textContent="Найдено решений: "+L.length+" из "+DATA.decisions.length;
+    tb.innerHTML=L.length?L.map(function(r){var m=meeting(r.meeting);
+      return '<tr data-id="'+esc(r.id)+'" tabindex="0"><td>№ '+esc(m.no)+'<br><span class="muted">от '+fmt(m.date)+', вопрос '+esc(r.q)+'</span></td><td><a href="#/decision/'+esc(r.id)+'">'+esc(r.title)+'</a></td><td>'+esc(r.owner)+'</td><td>'+fmt(r.deadline)+'</td><td>'+badge(eff(r))+'</td><td>'+r.reports.length+'</td></tr>';
+    }).join(""):'<tr><td colspan="6" class="empty">По заданным условиям решений нет. Измените или сбросьте фильтры.</td></tr>';
+    tb.querySelectorAll("tr[data-id]").forEach(function(tr){
+      tr.addEventListener("click",function(e){if(e.target.tagName!=="A") location.hash="#/decision/"+tr.dataset.id;});
+      tr.addEventListener("keydown",function(e){if(e.key==="Enter") location.hash="#/decision/"+tr.dataset.id;});
+    });
+    return L;
+  }
+  function bind(id,key){var el=document.getElementById(id); el.addEventListener(el.tagName==="INPUT"?"input":"change",function(){filt[key]=el.value; draw();});}
+  bind("fq","q");bind("fy","year");bind("fs","status");bind("fo","owner");bind("fm","meeting");
+  document.getElementById("reset").onclick=function(){filt={q:"",year:"",status:"",owner:"",meeting:""};R.decisions();};
+  document.getElementById("print").onclick=function(){window.print();};
+  document.getElementById("csv").onclick=function(){
+    var L=list(), rows=[["Протокол","Дата заседания","Вопрос","Решение","Поручение","Ответственный","Срок","Статус","Отчётов"]];
+    L.forEach(function(r){var m=meeting(r.meeting);rows.push([m.no,fmt(m.date),r.q,r.title,r.task,r.owner,fmt(r.deadline),STATUS[eff(r)].t,r.reports.length]);});
+    var csv="\ufeff"+rows.map(function(a){return a.map(function(x){return '"'+String(x).replace(/"/g,'""')+'"';}).join(";");}).join("\r\n");
+    var box=document.createElement("div");
+    box.className="card"; box.innerHTML='<h3>Данные для Excel</h3><p class="muted">Скопируйте текст и вставьте в Excel, либо сохраните как файл .csv.</p><textarea style="width:100%;min-height:160px;font:inherit;font-size:.85rem" readonly>'+esc(csv.slice(1))+'</textarea>';
+    var old=document.getElementById("csvbox"); if(old) old.remove(); box.id="csvbox"; view.appendChild(box); box.querySelector("textarea").select();
+  };
+  draw();
+};
+
+R.decision=function(id){
+  var r=DATA.decisions.filter(function(x){return x.id===id;})[0];
+  if(!r){setHead("Решение не найдено",[{t:"Реестр решений",href:"#/decisions"}]);view.innerHTML='<div class="card"><p>Решение с таким номером отсутствует. <a href="#/decisions">Вернуться к реестру</a></p></div>';return;}
+  var m=meeting(r.meeting), k=eff(r);
+  setHead("Решение № "+(m.no||"")+", вопрос "+r.q,[{t:"Реестр решений",href:"#/decisions"},{t:"Вопрос "+r.q}]);
+  var tl=r.reports.length?'<ul class="timeline">'+r.reports.slice().sort(function(a,b){return (d(b.date)||0)-(d(a.date)||0);}).map(function(x){
+      return '<li><div class="when">'+fmt(x.date)+', '+esc(x.author)+'</div><div>'+esc(x.text)+'</div>'+(x.file?'<span class="file">📎 '+esc(x.file)+'</span>':'')+'</li>';
+    }).join("")+'</ul>':'<p class="muted">Отчёты об исполнении пока не поступали.</p>';
+  view.innerHTML='<div class="card">'+
+    '<div class="dhead"><h2 style="margin:0;max-width:60ch">'+esc(r.title)+'</h2>'+badge(k)+'</div>'+
+    '<div class="grid2">'+
+      '<div class="field"><span>Протокол заседания</span><b>№ '+esc(m.no)+' от '+fmt(m.date)+'</b></div>'+
+      '<div class="field"><span>Форма заседания</span><b>'+esc(m.form)+'</b></div>'+
+      '<div class="field"><span>Ответственный за исполнение</span><b>'+esc(r.owner)+'</b></div>'+
+      '<div class="field"><span>Срок исполнения</span><b>'+fmt(r.deadline)+'</b></div>'+
+    '</div></div>'+
+    '<div class="card"><h3>Текст решения</h3><div class="quote">'+esc(r.decision)+'</div><h3 style="margin-top:18px">Поручение</h3><p>'+esc(r.task)+'</p></div>'+
+    '<div class="card"><h3>Отчёты об исполнении</h3>'+tl+'</div>'+
+    '<p class="noprint"><a href="#/decisions">Вернуться к реестру</a> &nbsp; <button class="btn" type="button" onclick="window.print()">Печать карточки</button></p>';
+};
+
+R.reports=function(){
+  setHead("Отчёты об исполнении",[{t:"Отчёты об исполнении"}]);
+  var c=counts();
+  view.innerHTML='<div class="card"><h2>Периодические отчёты об исполнении решений</h2><ul class="doclist">'+DATA.quarterly.map(function(q){
+    return '<li><span><span class="ext">PDF</span>Отчёт об исполнении решений за '+esc(q.period)+'</span><span class="muted">'+fmt(q.date)+'</span></li>';
+  }).join("")+'</ul></div>'+
+  '<div class="card"><h2>Решения, требующие внимания</h2>'+
+   attention()+'</div>';
+  function attention(){
+    var L=DATA.decisions.filter(function(r){var k=eff(r);return k==="over"||k==="soon";});
+    if(!L.length) return '<p class="muted">Просроченных решений и решений с истекающим сроком нет.</p>';
+    return '<ul class="doclist">'+L.map(function(r){var m=meeting(r.meeting);return '<li><span><a href="#/decision/'+esc(r.id)+'">'+esc(r.title)+'</a><br><span class="muted">Протокол № '+esc(m.no)+', ответственный: '+esc(r.owner)+', срок '+fmt(r.deadline)+'</span></span>'+badge(eff(r))+'</li>';}).join("")+'</ul>';
+  }
+};
+
+R.documents=function(){
+  setHead("Внутренние документы",[{t:"Внутренние документы"}]);
+  view.innerHTML='<div class="card"><h2>Внутренние документы</h2><ul class="doclist">'+DATA.documents.map(function(x){
+    return '<li><span><span class="ext">'+esc(x.ext)+'</span>'+esc(x.title)+'</span><span class="muted">'+esc(x.date)+'</span></li>';
+  }).join("")+'</ul></div>';
+};
+
+R.secretary=function(){
+  setHead("Корпоративный секретарь",[{t:"Корпоративный секретарь"}]);
+  var s=DATA.secretary;
+  view.innerHTML='<div class="card"><h2>Корпоративный секретарь</h2><div class="member" style="max-width:520px"><div class="avatar" aria-hidden="true">'+esc(initials(s.name))+'</div><b>'+esc(s.name)+'</b><span>'+esc(s.role)+'</span>'+
+   '<div class="grid2" style="margin-top:14px"><div class="field"><span>Телефон</span><b>'+esc(s.phone)+'</b></div><div class="field"><span>Эл. почта</span><b>'+esc(s.email)+'</b></div><div class="field"><span>Адрес</span><b>'+esc(s.address)+'</b></div></div></div></div>';
+};
+
+
+/* ================= ОЦЕНКА ДЕЯТЕЛЬНОСТИ НС ================= */
+var E=DATA.evaluation;
+var EV={store:null};
+function allQ(){var a=[];E.blocks.forEach(function(b){b.questions.forEach(function(q){a.push(q);});});return a;}
+function yearOf(p){var y=parseInt(p,10);return E.years.indexOf(y)>=0?y:E.openYear;}
+function yearTabs(route,year){
+  return '<nav class="yrs" aria-label="Год оценки">'+E.years.map(function(y){
+    return '<a href="#/'+route+'/'+y+'" class="'+(y===year?"on":"")+'"'+(y===year?' aria-current="true"':'')+'>за '+y+' год'+(y===E.openYear?'<span class="dotx" title="Идёт анкетирование"></span>':'')+'</a>';
+  }).join("")+'</nav>';
+}
+function evalHead(t,sub){setHead(t,[{t:"Оценка деятельности НС",href:"#/eval-form"},{t:sub}]);}
+function mean(arr){return arr.length?arr.reduce(function(s,x){return s+x;},0)/arr.length:null;}
+function r1(x){return x==null?"—":(Math.round(x*10)/10).toFixed(1).replace(".",",");}
+
+var LS_KEY="ns-eval-draft-";
+function lsGet(y){try{var v=localStorage.getItem(LS_KEY+y);return v?JSON.parse(v):null;}catch(e){return null;}}
+function lsSet(y,rec){try{localStorage.setItem(LS_KEY+y,JSON.stringify(rec));return true;}catch(e){return false;}}
+
+R["eval-form"]=function(p){
+  var year=yearOf(p); evalHead("Анкета для самооценки","Анкета для самооценки");
+  var head=yearTabs("eval-form",year);
+  if(year!==E.openYear){
+    view.innerHTML=head+'<div class="card"><h2>Анкета для самооценки за '+year+' год</h2><div class="notice nb-blue">Анкетирование за '+year+' год проводилось вне сайта. Ниже приведена форма анкеты для справки.</div>'+formHtml(year,{},true)+'</div>';
+    return;
+  }
+  var rec=lsGet(year)||{name:"",answers:{},texts:{}};
+  view.innerHTML=head+'<div class="card"><h2>Анкета для самооценки деятельности Наблюдательного совета за '+year+' год</h2>'+
+    '<div class="notice nb-blue"><b>Срок заполнения: до '+fmt(E.deadline)+'.</b> Ответы автоматически сохраняются в этом браузере, можно вернуться к анкете позже. После заполнения сохраните анкету в файл и направьте корпоративному секретарю'+(DATA.secretary.email?' ('+esc(DATA.secretary.email)+')':'')+'.'+
+    (E.formUrl?' Также можно <a href="'+esc(E.formUrl)+'" target="_blank" rel="noopener">заполнить анкету в Microsoft Forms</a>.':'')+'</div>'+
+    '<p class="muted">Оцените каждое утверждение по шкале от 1 до 5: 1 — полностью не согласен, 5 — полностью согласен. Если не можете оценить, выберите «Н/О».</p>'+
+    '<div class="qrow" style="padding:0 0 16px"><label for="fio">Фамилия и инициалы (необязательно; при анонимном анкетировании оставьте пустым)</label><input id="fio" class="ta" style="min-height:0" value="'+esc(rec.name||"")+'"></div>'+
+    formHtml(year,rec,false)+
+    '<div class="formbar"><div class="prog"><span id="progTxt"></span><div class="track"><div class="fill" id="progFill"></div></div></div><span class="muted" id="saveMsg" aria-live="polite"></span>'+
+    '<span style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn" id="clearBtn">Очистить</button><button type="button" class="btn" id="mailBtn">Отправить по почте</button><button type="button" class="btn pri" id="saveBtn">Сохранить анкету в файл</button></span></div>'+
+  '</div>';
+  wireForm(year,rec);
+};
+function formHtml(year,rec,disabled){
+  var dis=disabled?" disabled":"", ans=rec.answers||{}, tx=rec.texts||{};
+  var h=E.blocks.map(function(b,bi){
+    return '<section class="qblock"><h3>'+(bi+1)+'. '+esc(b.title)+'</h3>'+b.questions.map(function(q){
+      var opts=[1,2,3,4,5].map(function(v){return '<label title="'+esc(E.scale[v-1])+'"><input type="radio" name="q_'+q.id+'" value="'+v+'"'+(ans[q.id]===v?" checked":"")+dis+'><span>'+v+'</span></label>';}).join("")+
+        '<label class="na" title="Не могу оценить"><input type="radio" name="q_'+q.id+'" value="0"'+(ans[q.id]===0?" checked":"")+dis+'><span>Н/О</span></label>';
+      return '<div class="qrow"><fieldset><legend>'+esc(q.id)+'. '+esc(q.text)+'</legend><div class="scale">'+opts+'</div></fieldset></div>';
+    }).join("")+
+    '<div class="qrow"><label for="c_'+b.id+'" class="muted" style="font-size:.9rem">Комментарий к разделу (необязательно)</label><textarea class="ta" id="c_'+b.id+'" data-t="c_'+b.id+'"'+dis+'>'+esc(tx["c_"+b.id]||"")+'</textarea></div></section>';
+  }).join("");
+  h+='<section class="qblock"><h3>'+(E.blocks.length+1)+'. Общие вопросы</h3>'+E.finalQuestions.map(function(f){
+    return '<div class="qrow"><label for="f_'+f.id+'">'+esc(f.text)+'</label><textarea class="ta" id="f_'+f.id+'" data-t="'+f.id+'"'+dis+'>'+esc(tx[f.id]||"")+'</textarea></div>';
+  }).join("")+'</section>';
+  return h;
+}
+function wireForm(year,rec){
+  var Q=allQ(), timer=null;
+  rec.answers=rec.answers||{}; rec.texts=rec.texts||{};
+  var msg=document.getElementById("saveMsg");
+  function answered(){return Q.filter(function(q){return typeof rec.answers[q.id]==="number";}).length;}
+  function progress(){
+    var n=answered();
+    document.getElementById("progTxt").textContent="Отвечено "+n+" из "+Q.length;
+    document.getElementById("progFill").style.width=(n/Q.length*100)+"%";
+  }
+  function saveSoon(){
+    clearTimeout(timer);
+    timer=setTimeout(function(){
+      rec.updatedAt=new Date().toISOString();
+      if(lsSet(year,rec)){var t=new Date(); msg.textContent="Черновик сохранён в "+("0"+t.getHours()).slice(-2)+":"+("0"+t.getMinutes()).slice(-2);}
+      else msg.textContent="Автосохранение недоступно в этом браузере";
+    },800);
+  }
+  function asText(){
+    var L=["АНКЕТА ДЛЯ САМООЦЕНКИ ДЕЯТЕЛЬНОСТИ НАБЛЮДАТЕЛЬНОГО СОВЕТА ЗА "+year+" ГОД", DATA.company, "Дата заполнения: "+fmt(new Date().toISOString().slice(0,10)), "Респондент: "+(rec.name||"анонимно"), ""];
+    E.blocks.forEach(function(b,i){
+      L.push((i+1)+". "+b.title.toUpperCase());
+      b.questions.forEach(function(q){var v=rec.answers[q.id]; L.push(q.id+". "+q.text+" — "+(v===0?"Н/О":(typeof v==="number"?v:"нет ответа")));});
+      if(rec.texts["c_"+b.id]) L.push("Комментарий: "+rec.texts["c_"+b.id]);
+      L.push("");
+    });
+    L.push((E.blocks.length+1)+". ОБЩИЕ ВОПРОСЫ");
+    E.finalQuestions.forEach(function(f){L.push(f.text); L.push(rec.texts[f.id]||"—"); L.push("");});
+    return L.join("\r\n");
+  }
+  function check(){
+    var n=answered();
+    if(n<Q.length){msg.textContent="Не отвечено вопросов: "+(Q.length-n)+". Файл можно сохранить, но рекомендуем ответить на все."; }
+  }
+  view.querySelectorAll('input[type=radio]').forEach(function(r){
+    r.addEventListener("change",function(){rec.answers[r.name.slice(2)]=+r.value; progress(); saveSoon();});
+  });
+  view.querySelectorAll('textarea[data-t]').forEach(function(t){
+    t.addEventListener("input",function(){rec.texts[t.dataset.t]=t.value.slice(0,4000); saveSoon();});
+  });
+  document.getElementById("fio").addEventListener("input",function(e){rec.name=e.target.value.slice(0,120); saveSoon();});
+  document.getElementById("saveBtn").onclick=function(){
+    check();
+    var blob=new Blob(["\ufeff"+asText()],{type:"text/plain;charset=utf-8"});
+    var a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+    a.download="Анкета_самооценка_НС_"+year+(rec.name?"_"+rec.name.replace(/[^\wа-яА-ЯёЁ.-]+/g,"_").replace(/[._]+$/,""):"")+".txt";
+    document.body.appendChild(a); a.click(); setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},500);
+  };
+  document.getElementById("mailBtn").onclick=function(){
+    check();
+    var subj="Анкета для самооценки НС за "+year+" год";
+    var body=asText();
+    if(body.length>1800) body="Анкета сохранена в файл и приложена к письму.\r\n\r\n(Нажмите «Сохранить анкету в файл» и приложите файл к этому письму.)";
+    location.href="mailto:"+encodeURIComponent(DATA.secretary.email||"")+"?subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(body);
+  };
+  document.getElementById("clearBtn").onclick=function(){
+    var b=this;
+    if(b.dataset.c!=="1"){b.dataset.c="1"; b.textContent="Точно очистить?"; return;}
+    try{localStorage.removeItem(LS_KEY+year);}catch(e){}
+    route(true);
+  };
+  progress();
+}
+
+R["eval-stats"]=function(p){
+  var year=yearOf(p); evalHead("Статистические данные","Статистические данные");
+  var dash='<span class="muted">—</span>';
+  view.innerHTML=yearTabs("eval-stats",year)+
+   '<div class="card"><h2>Статистические данные по итогам оценки за '+year+' год</h2><div class="notice nb-blue">'+(year===E.openYear?'Идёт анкетирование (срок до '+fmt(E.deadline)+'). Данные будут размещены после подведения итогов.':'Раздел будет заполнен данными за '+year+' год.')+'</div>'+
+   '<div class="kpis" style="grid-template-columns:repeat(3,1fr);margin-bottom:0">'+
+     '<div class="kpi" style="--c:var(--blue);cursor:default"><b>—</b><span>Участвовали в анкетировании</span></div>'+
+     '<div class="kpi" style="--c:var(--done);cursor:default"><b>—</b><span>Общий результат оценки</span></div>'+
+     '<div class="kpi" style="--c:var(--soon);cursor:default"><b>—</b><span>Уровень участия</span></div>'+
+   '</div></div>'+
+   '<div class="card"><h2>1. Результаты по разделам анкеты</h2><div class="scroll"><table style="min-width:560px"><thead><tr><th>Раздел</th><th style="width:160px">Результат</th><th style="width:200px">Изменение к прошлому году</th></tr></thead><tbody>'+
+     E.blocks.map(function(b,i){return '<tr style="cursor:default"><td>'+(i+1)+'. '+esc(b.title)+'</td><td>'+dash+'</td><td>'+dash+'</td></tr>';}).join("")+
+   '</tbody></table></div></div>'+
+   '<div class="card"><h2>2. Результаты по вопросам</h2><div class="scroll"><table style="min-width:560px"><thead><tr><th>Вопрос</th><th style="width:160px">Результат</th></tr></thead><tbody>'+
+     allQ().map(function(q){return '<tr style="cursor:default"><td>'+esc(q.id)+'. '+esc(q.text)+'</td><td>'+dash+'</td></tr>';}).join("")+
+   '</tbody></table></div></div>'+
+   '<div class="card"><h2>3. Обобщённые комментарии членов Наблюдательного совета</h2><p class="muted">[Сводка комментариев без указания авторов]</p></div>'+
+   '<div class="card"><h2>4. Динамика за 2021–2025 годы</h2><div class="scroll"><table style="min-width:640px"><thead><tr><th>Раздел</th>'+E.years.map(function(y){return '<th style="text-align:center">'+y+'</th>';}).join("")+'</tr></thead><tbody>'+
+     E.blocks.map(function(b){return '<tr style="cursor:default"><td>'+esc(b.title)+'</td>'+E.years.map(function(){return '<td style="text-align:center">'+dash+'</td>';}).join("")+'</tr>';}).join("")+
+     '<tr style="cursor:default"><td><b>Общий результат</b></td>'+E.years.map(function(){return '<td style="text-align:center">'+dash+'</td>';}).join("")+'</tr>'+
+     '<tr style="cursor:default"><td>Участие</td>'+E.years.map(function(){return '<td style="text-align:center">'+dash+'</td>';}).join("")+'</tr>'+
+   '</tbody></table></div></div>';
+};
+
+R["eval-report"]=function(p){
+  var year=yearOf(p); evalHead("Отчёт о результатах оценки","Отчёт о результатах оценки");
+  var rp=E.reports[String(year)]||{};
+  function v(x,ph){return x?esc(x):'<span class="muted">'+ph+'</span>';}
+  function lst(a,ph){return a&&a.length?'<ul>'+a.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>':'<p class="muted">'+ph+'</p>';}
+  view.innerHTML=yearTabs("eval-report",year)+
+   '<div class="card"><h2>Отчёт о результатах оценки деятельности Наблюдательного совета за '+year+' год</h2>'+
+   (rp.date?'':'<div class="notice nb-blue">'+(year===E.openYear?'Отчёт готовится по итогам анкетирования и будет размещён после рассмотрения на заседании Наблюдательного совета.':'Раздел будет заполнен отчётом за '+year+' год.')+'</div>')+
+   '<div class="grid2"><div class="field"><span>Дата рассмотрения</span><b>'+(rp.date?fmt(rp.date):'<span class="muted">[дата]</span>')+'</b></div><div class="field"><span>Протокол заседания</span><b>'+v(rp.protocol,"[№ протокола]")+'</b></div></div>'+
+   '<p style="margin-top:14px"><span class="file">📎 '+v(rp.file,"[Файл отчёта]")+'</span></p></div>'+
+   '<div class="card"><h3>1. Методика и сроки проведения оценки</h3><p class="muted">'+(rp.method?esc(rp.method):'[Текст]')+'</p></div>'+
+   '<div class="card"><h3>2. Уровень участия</h3><p class="muted">'+(rp.participation?esc(rp.participation):'[Текст]')+'</p></div>'+
+   '<div class="card"><h3>3. Общий вывод</h3>'+(rp.summary?'<div class="quote">'+esc(rp.summary)+'</div>':'<p class="muted">[Текст]</p>')+'</div>'+
+   '<div class="card"><h3>4. Сильные стороны</h3>'+lst(rp.strengths,"[Текст]")+'</div>'+
+   '<div class="card"><h3>5. Зоны развития</h3>'+lst(rp.areas,"[Текст]")+'</div>'+
+   '<div class="card"><h3>6. Рекомендации и план мероприятий</h3>'+lst(rp.recommendations,"[Текст]")+'</div>'+
+   '<p class="noprint"><button class="btn" type="button" onclick="window.print()">Печать</button></p>';
+};
+
+function currentName(){return (location.hash.replace(/^#\/?/,"")||"about").split("/")[0];}
+function route(keep){
+  var h=location.hash.replace(/^#\/?/,"")||"about", parts=h.split("/"), name=parts[0];
+  if(!R[name]) name="about";
+  var side=name==="decision"?"decisions":name;
+  document.querySelectorAll("aside.side a").forEach(function(a){a.classList.toggle("on",a.dataset.r===side); if(a.dataset.r===side) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current");});
+  document.querySelectorAll("nav.main a").forEach(function(a){var ev=name.indexOf("eval")===0, isEv=a.getAttribute("href")==="#/eval-form"; var cg=a.textContent==="Корпоративное управление"; a.classList.toggle("on", ev?isEv:(cg&&["documents","secretary"].indexOf(name)<0)||(a.getAttribute("href")==="#/"+name&&!cg&&name!=="about"));});
+  var y=window.scrollY;
+  R[name](parts[1]);
+  if(keep===true){window.scrollTo(0,y);} else {view.focus({preventScroll:true}); window.scrollTo(0,0);}
+}
+window.addEventListener("hashchange",function(){route();});
+route();
+
+var root=document.documentElement, tbtn=document.getElementById("themeBtn");
+function dark(){var t=root.getAttribute("data-theme"); if(t) return t==="dark"; return matchMedia("(prefers-color-scheme: dark)").matches;}
+function lab(){tbtn.textContent=dark()?"Светлая тема":"Тёмная тема";}
+try{var s=localStorage.getItem("theme"); if(s) root.setAttribute("data-theme",s);}catch(e){}
+lab();
+tbtn.onclick=function(){var n=dark()?"light":"dark"; root.setAttribute("data-theme",n); try{localStorage.setItem("theme",n);}catch(e){} lab();};
+})();
+</script>
+</body>
+</html>
